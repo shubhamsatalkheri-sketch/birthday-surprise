@@ -1,488 +1,634 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-select=none">
-  <title>Happy Birthday Bestie! ✨</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>A Little Note For You ✨</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Caveat:wght@700&display=swap" rel="stylesheet">
   
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
     :root {
-      --primary: #ff4081;
-      --secondary: #7c4dff;
-      --accent: #ffd700;
-      --card-bg: rgba(255, 255, 255, 0.22);
-      --card-border: rgba(255, 255, 255, 0.45);
+      --bg-dark: #1b162b;
+      --bg-light: #fff0f5;
+      --pink-primary: #ff4081;
+      --pink-btn: linear-gradient(135deg, #ff4081 0%, #ff6584 100%);
+      --card-white: #ffffff;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Outfit', sans-serif;
+      font-family: 'Nunito', sans-serif;
       -webkit-tap-highlight-color: transparent;
       user-select: none;
     }
 
     body {
-      background: linear-gradient(135deg, #1b002c 0%, #3a005c 40%, #7b1154 80%, #ff4d6d 100%);
+      background-color: var(--bg-dark);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: hidden;
+      overflow-x: hidden;
+      transition: background-color 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body.lights-on {
+      background: linear-gradient(180deg, #ffeef4 0%, #ffdce8 50%, #fff5f8 100%);
+    }
+
+    /* Screen Wrapper */
+    .app-screen {
+      width: 100%;
+      max-width: 420px;
+      min-height: 100vh;
       position: relative;
-      color: #fff;
-    }
-
-    .bg-shape {
-      position: absolute;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.05));
-      backdrop-filter: blur(2px);
-      box-shadow: inset -5px -5px 15px rgba(0, 0, 0, 0.15), 0 10px 25px rgba(0,0,0,0.2);
-      pointer-events: none;
-      animation: floatUp 14s infinite linear;
-    }
-    .shape1 { width: 90px; height: 90px; left: 8%; bottom: -120px; animation-duration: 11s; }
-    .shape2 { width: 140px; height: 140px; left: 75%; bottom: -160px; animation-duration: 16s; animation-delay: 2s; }
-    .shape3 { width: 60px; height: 60px; left: 45%; bottom: -90px; animation-duration: 9s; animation-delay: 4s; }
-
-    @keyframes floatUp {
-      0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-      15% { opacity: 0.7; }
-      85% { opacity: 0.7; }
-      100% { transform: translateY(-115vh) rotate(360deg); opacity: 0; }
-    }
-
-    .music-btn {
-      position: fixed;
-      top: 18px;
-      right: 18px;
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-      color: #fff;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      font-size: 1.25rem;
-      cursor: pointer;
-      z-index: 100;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 24px 18px;
+      overflow: hidden;
     }
-    .music-btn:active { transform: scale(0.9); }
 
+    /* String Lights at Top */
+    .fairy-lights {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      padding: 8px 12px;
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: all 1s ease;
+      z-index: 15;
+    }
+    .lights-on .fairy-lights {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .bulb {
+      font-size: 1.7rem;
+      animation: bulbGlow 1.2s infinite alternate ease-in-out;
+    }
+    .bulb:nth-child(2) { animation-delay: 0.2s; }
+    .bulb:nth-child(3) { animation-delay: 0.4s; }
+    .bulb:nth-child(4) { animation-delay: 0.6s; }
+    .bulb:nth-child(5) { animation-delay: 0.8s; }
+    .bulb:nth-child(6) { animation-delay: 0.3s; }
+    .bulb:nth-child(7) { animation-delay: 0.5s; }
+
+    @keyframes bulbGlow {
+      from { filter: drop-shadow(0 0 2px #fff); opacity: 0.65; }
+      to { filter: drop-shadow(0 0 12px #ff4081); opacity: 1; transform: scale(1.08); }
+    }
+
+    /* Cute Mascot Cats */
+    .cute-cat {
+      position: absolute;
+      font-size: 3.5rem;
+      z-index: 12;
+      opacity: 0;
+      transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .cute-cat.top-cat {
+      top: 60px;
+      right: 15px;
+      transform: translateY(-40px) rotate(15deg);
+    }
+    .cute-cat.bottom-cat {
+      bottom: 25px;
+      left: 15px;
+      transform: translateY(40px) rotate(-15deg);
+    }
+    .show-cats .cute-cat {
+      opacity: 1;
+      transform: translateY(0) rotate(0deg);
+    }
+
+    /* Pastel Floating Balloons */
+    .balloon {
+      position: absolute;
+      bottom: -100px;
+      font-size: 2.8rem;
+      pointer-events: none;
+      z-index: 14;
+      animation: floatBalloon 6s linear forwards;
+    }
+    @keyframes floatBalloon {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-110vh) rotate(20deg); opacity: 0; }
+    }
+
+    /* Core Card Design */
     .card {
-      position: relative;
-      width: 90%;
-      max-width: 410px;
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--card-border);
-      border-radius: 28px;
-      padding: 36px 24px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.3);
+      background: var(--card-white);
+      width: 100%;
+      border-radius: 26px;
+      padding: 30px 22px;
+      box-shadow: 0 16px 35px rgba(255, 105, 180, 0.15), 0 4px 10px rgba(0,0,0,0.05);
+      border: 1px solid rgba(255, 182, 193, 0.4);
       text-align: center;
       display: none;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      z-index: 10;
-      opacity: 0;
-      transform: translateY(20px) scale(0.96);
-      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 20;
+      animation: popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .card.active { display: flex; }
+
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.92) translateY(15px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
     }
 
-    .card.active {
-      display: flex;
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-
-    .title {
-      font-family: 'Dancing Script', cursive;
-      font-size: 2.9rem;
+    /* Dark Mode Step 1 & 2 styles */
+    .dark-text {
+      color: #eae6f5;
+      font-size: 1.6rem;
       font-weight: 700;
-      background: linear-gradient(135deg, #fff 30%, #ffc2df 70%, #ffd166 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 8px;
-      text-shadow: 0 10px 25px rgba(255, 64, 129, 0.3);
+      margin-bottom: 25px;
+    }
+    .dark-moon {
+      font-size: 4.5rem;
+      margin-bottom: 15px;
+      filter: drop-shadow(0 0 15px #ffd700);
+      animation: floatMoon 3s ease-in-out infinite;
+    }
+    @keyframes floatMoon {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
     }
 
-    .subtitle {
-      font-size: 1.02rem;
-      color: rgba(255, 255, 255, 0.9);
-      line-height: 1.5;
-      font-weight: 300;
-      margin-bottom: 24px;
-    }
-
-    .btn {
-      background: linear-gradient(135deg, #ff4081 0%, #ff6b8b 50%, #ff8e53 100%);
+    /* Buttons */
+    .btn-pink {
+      background: var(--pink-btn);
+      color: #fff;
       border: none;
       outline: none;
-      color: white;
-      padding: 14px 34px;
-      font-size: 1.08rem;
-      font-weight: 600;
-      letter-spacing: 0.5px;
+      width: 100%;
+      padding: 15px 24px;
       border-radius: 50px;
-      box-shadow: 0 12px 25px rgba(255, 64, 129, 0.45);
+      font-size: 1.08rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
       cursor: pointer;
+      box-shadow: 0 8px 22px rgba(255, 64, 129, 0.38);
+      transition: all 0.25s ease;
       display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      transition: all 0.3s ease;
-    }
-    .btn:active {
-      transform: scale(0.95);
-    }
-
-    .cake-container {
-      position: relative;
-      width: 260px;
-      height: 240px;
-      margin: 8px 0 18px 0;
-      touch-action: none;
-      filter: drop-shadow(0 15px 25px rgba(0,0,0,0.35));
-    }
-
-    @keyframes flicker {
-      0%, 100% { transform: scale(1) rotate(-1deg); opacity: 0.95; }
-      50% { transform: scale(1.1, 1.25) rotate(2deg); opacity: 1; filter: drop-shadow(0 0 12px #ffc107); }
-    }
-    .candle-flame {
-      transform-origin: center bottom;
-      animation: flicker 1s infinite alternate ease-in-out;
-    }
-
-    .cut-line {
-      position: absolute;
-      width: 4px;
-      height: 0;
-      background: linear-gradient(180deg, #fff, #ffd54f, #ff4081);
-      border-radius: 4px;
-      box-shadow: 0 0 12px #ffd54f, 0 0 20px #ff4081;
-      pointer-events: none;
-      transition: height 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
-    }
-    .cut-line-1 {
-      left: 105px;
-      top: 90px;
-      transform: rotate(-12deg);
-    }
-    .cut-line-2 {
-      left: 145px;
-      top: 90px;
-      transform: rotate(12deg);
-    }
-    .cut-line.cut-done {
-      height: 110px;
-    }
-
-    #cakeSlice {
-      transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.8s ease;
-      transform-origin: center center;
-    }
-    #cakeSlice.sliced-out {
-      transform: translateY(35px) scale(1.1);
-      filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.45));
-    }
-
-    .slide-hint {
-      display: inline-flex;
+      justify-content: center;
       align-items: center;
       gap: 8px;
-      font-size: 0.92rem;
-      background: rgba(255, 255, 255, 0.16);
-      padding: 8px 18px;
-      border-radius: 20px;
-      color: #fff;
-      font-weight: 500;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
+    .btn-pink:active { transform: scale(0.96); box-shadow: 0 4px 12px rgba(255, 64, 129, 0.3); }
 
-    .party-icons {
+    .btn-row {
       display: flex;
+      gap: 12px;
+      width: 100%;
+      margin-top: 15px;
+    }
+    .btn-secondary {
+      background: #f1f3f5;
+      color: #495057;
+      border: none;
+      padding: 14px 20px;
+      border-radius: 50px;
+      font-weight: 700;
+      flex: 1;
+      cursor: pointer;
+    }
+
+    /* Step Indicators (Dots) */
+    .step-dots {
+      display: flex;
+      gap: 6px;
+      margin-top: 18px;
+    }
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #ffd1dc;
+    }
+    .dot.active {
+      width: 22px;
+      border-radius: 10px;
+      background: var(--pink-primary);
+    }
+
+    /* Cake Cut Drag Area */
+    .cake-drag-area {
+      width: 100%;
+      position: relative;
+      touch-action: none;
+      margin: 15px 0 10px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .cut-track {
+      position: absolute;
+      top: 50%;
+      left: 15%;
+      width: 70%;
+      height: 6px;
+      background: rgba(255, 64, 129, 0.2);
+      border-radius: 6px;
+      z-index: 5;
+    }
+    .cut-slider {
+      position: absolute;
+      top: calc(50% - 17px);
+      left: 15%;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+      display: flex;
+      align-items: center;
       justify-content: center;
-      gap: 18px;
-      font-size: 3.6rem;
-      margin: 10px 0 22px 0;
-    }
-    .party-icons span {
-      display: inline-block;
-      animation: jump 0.7s infinite alternate cubic-bezier(0.2, 0.8, 0.4, 1);
-    }
-    .party-icons span:nth-child(2) { animation-delay: 0.15s; }
-    .party-icons span:nth-child(3) { animation-delay: 0.3s; }
-
-    @keyframes jump {
-      from { transform: translateY(0); }
-      to { transform: translateY(-20px); }
+      font-size: 1.2rem;
+      cursor: grab;
+      z-index: 6;
+      transition: left 0.1s ease;
     }
 
-    .heart-icon {
-      font-size: 5rem;
-      display: inline-block;
-      color: #ff3366;
-      animation: heartPulse 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
-      filter: drop-shadow(0 0 25px rgba(255, 51, 102, 0.6));
+    /* Flip Cards Section */
+    .flip-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      width: 100%;
+      margin: 12px 0 18px 0;
+    }
+    .flip-box {
+      width: 100%;
+      height: 125px;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+    .flip-box-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+      border-radius: 18px;
+    }
+    .flip-box.flipped .flip-box-inner {
+      transform: rotateY(180deg);
+    }
+    .flip-front, .flip-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 18px;
+      backface-visibility: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 12px 16px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+    }
+    .flip-front {
+      background: #fff6f9;
+      border: 2px dashed #ffb3c6;
+    }
+    .flip-front span.tap-hint {
+      font-size: 0.8rem;
+      color: #ff6584;
+      font-weight: 700;
+      margin-top: 6px;
+    }
+    .flip-back {
+      background: #ffffff;
+      border: 2px solid #ff4081;
+      transform: rotateY(180deg);
+      text-align: center;
+      font-size: 0.9rem;
+      color: #495057;
+      line-height: 1.4;
+      font-weight: 600;
+    }
+
+    /* Final Notepad Letter Modal */
+    .letter-paper {
+      background: #fffdfa;
+      border-radius: 18px;
+      border: 1px solid #f1e0d6;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+      width: 100%;
+      padding: 26px 20px;
+      text-align: left;
+      position: relative;
+    }
+    .letter-header {
+      font-size: 0.82rem;
+      color: #adb5bd;
+      letter-spacing: 1px;
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px dashed #e9ecef;
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+    .letter-title {
+      font-family: 'Fredoka', cursive;
+      font-size: 1.9rem;
+      color: var(--pink-primary);
       margin-bottom: 12px;
     }
-    @keyframes heartPulse {
-      0% { transform: scale(1); }
-      14% { transform: scale(1.22); }
-      28% { transform: scale(1); }
-      42% { transform: scale(1.15); }
-      70% { transform: scale(1); }
+    .letter-body {
+      font-size: 0.96rem;
+      color: #495057;
+      line-height: 1.7;
+      margin-bottom: 16px;
     }
-
-    .love-heading {
-      font-family: 'Dancing Script', cursive;
-      font-size: 2.8rem;
-      font-weight: 700;
-      color: #fff;
-      text-shadow: 0 0 20px rgba(255, 105, 180, 0.7);
-      margin-bottom: 10px;
-      line-height: 1.2;
+    .letter-signature {
+      font-family: 'Caveat', cursive;
+      font-size: 1.8rem;
+      color: #ff4081;
+      text-align: right;
     }
   </style>
 </head>
 <body>
 
-  <div class="bg-shape shape1"></div>
-  <div class="bg-shape shape2"></div>
-  <div class="bg-shape shape3"></div>
-
+  <!-- Hidden Audio Player with your song -->
   <audio id="bdayAudio" loop preload="auto">
     <source src="sub_clair-happy-birthday-578363.mp3" type="audio/mpeg">
   </audio>
 
-  <button class="music-btn" id="musicToggle" onclick="toggleAudio()" title="Sound On/Off">
-    🎵
-  </button>
+  <div class="app-screen" id="appScreen">
 
-  <div class="card active" id="card1">
-    <div style="font-size: 3.4rem; margin-bottom: 12px;">🎉 🎂 ✨</div>
-    <h1 class="title">Happy Birthday!</h1>
-    <p class="subtitle">A very special celebration made with lots of love just for you!</p>
-    <button class="btn" onclick="nextCard(2)">
-      <span>Cut The Cake</span>
-      <span style="font-size: 1.2rem;">🎂</span>
-    </button>
-  </div>
-
-  <div class="card" id="card2">
-    <h1 class="title" style="font-size: 2.6rem;">Cut The Cake</h1>
-    <p class="subtitle" id="stepGuide" style="margin-bottom: 8px;">Baayein (Left) side slide karein (1/2) 🔪</p>
-    
-    <div class="cake-container" id="cakeBox">
-      <svg viewBox="0 0 240 220" width="100%" height="100%">
-        <ellipse cx="120" cy="205" rx="105" ry="12" fill="rgba(255,255,255,0.2)"/>
-        <ellipse cx="120" cy="200" rx="95" ry="10" fill="#f8f9fa"/>
-        <path d="M40 200 C 40 210, 200 210, 200 200" fill="#e9ecef"/>
-
-        <g id="cakeMain">
-          <path d="M45 140 Q 120 155 195 140 L 195 195 Q 120 210 45 195 Z" fill="#ff4081"/>
-          <path d="M45 140 Q 120 155 195 140 Q 120 125 45 140" fill="#ff79b0"/>
-          
-          <path d="M65 95 Q 120 108 175 95 L 175 142 Q 120 155 65 142 Z" fill="#7c4dff"/>
-          <path d="M65 95 Q 120 108 175 95 Q 120 82 65 95" fill="#b47cff"/>
-          <path d="M65 102 Q 80 115 95 102 Q 110 115 125 102 Q 140 115 155 102 Q 170 115 175 102" fill="none" stroke="#ffe082" stroke-width="4" stroke-linecap="round"/>
-        </g>
-
-        <g id="cakeSlice">
-          <path d="M98 100 L 142 100 L 152 195 Q 120 205 88 195 Z" fill="#e91e63" stroke="#fff" stroke-width="1.5"/>
-          <path d="M98 100 Q 120 106 142 100 L 138 142 Q 120 148 102 142 Z" fill="#673ab7"/>
-          <ellipse cx="120" cy="100" rx="22" ry="5" fill="#ffd54f"/>
-          
-          <rect x="117" y="55" width="6" height="42" rx="3" fill="#fff"/>
-          <line x1="120" y1="55" x2="120" y2="47" stroke="#333" stroke-width="2"/>
-          <g class="candle-flame">
-            <ellipse cx="120" cy="40" rx="6" ry="10" fill="#ffd54f"/>
-            <ellipse cx="120" cy="42" rx="3" ry="5" fill="#ff3d00"/>
-          </g>
-        </g>
-      </svg>
-
-      <div class="cut-line cut-line-1" id="cut1"></div>
-      <div class="cut-line cut-line-2" id="cut2"></div>
+    <!-- Fairy Lights Header -->
+    <div class="fairy-lights">
+      <span class="bulb">💖</span>
+      <span class="bulb">💡</span>
+      <span class="bulb">🌸</span>
+      <span class="bulb">💡</span>
+      <span class="bulb">✨</span>
+      <span class="bulb">💡</span>
+      <span class="bulb">🎉</span>
     </div>
 
-    <div class="slide-hint" id="hintText">
-      <span>👇</span>
-      <span id="hintMsg">Cake ke baayein (Left) hisse par ungli slide karein</span>
-    </div>
-  </div>
+    <!-- Cute Birthday Cats -->
+    <div class="cute-cat top-cat">🐱🎂</div>
+    <div class="cute-cat bottom-cat">🥳🐱</div>
 
-  <div class="card" id="card3">
-    <div class="party-icons">
-      <span>🐱</span>
-      <span>🐻</span>
-      <span>🐰</span>
+    <!-- 1. INTRO / READY POPUP -->
+    <div class="card active" id="step1" style="background: #fff;">
+      <div style="font-size: 0.8rem; color: #ff6584; letter-spacing: 2px; font-weight: 700; margin-bottom: 12px;">🌸 BESTIE.INTRO 🌸</div>
+      <div style="font-size: 4rem; margin-bottom: 8px;">🎂</div>
+      <div style="font-size: 0.85rem; color: #ffa4b6; font-weight: 700; letter-spacing: 1px;">A LITTLE NOTE FOR YOU</div>
+      <h2 style="font-family: 'Fredoka', cursive; font-size: 1.8rem; color: #343a40; margin: 15px 0 20px 0;">Ready to open it?</h2>
+      <div class="btn-row">
+        <button class="btn-pink" onclick="goToStep(2)">Yes! 💕</button>
+        <button class="btn-secondary" id="noBtn" onclick="runNoBtn()">No</button>
+      </div>
     </div>
-    <h1 class="title">Woohoo! 🎉</h1>
-    <p class="subtitle">Delicious cake sliced! Happy Birthday to the sweetest soul!</p>
-    <button class="btn" onclick="nextCard(4)">
-      <span>Next Surprise</span>
-      <span>💌</span>
-    </button>
-  </div>
 
-  <div class="card" id="card4">
-    <div class="heart-icon">💖</div>
-    <h1 class="love-heading">I Love You<br>My Dear Bestie!</h1>
-    <p class="subtitle" style="font-size: 1.12rem; color: #ffe3ee;">Thank you for being the sweetest and best friend forever! ✨</p>
-    <div style="font-size: 1.6rem; opacity: 0.9; letter-spacing: 6px; margin-top: 10px;">🌟 👯‍♀️ 🌟</div>
+    <!-- 2. ROOM IS DARK -->
+    <div class="card" id="step2" style="background: transparent; border: none; box-shadow: none;">
+      <div class="dark-moon">🌙 ✨</div>
+      <h2 class="dark-text">The room is dark.</h2>
+      <button class="btn-pink" onclick="turnOnLights()">Turn on the Lights 💡</button>
+      <div class="step-dots">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+
+    <!-- 3. SET THE MOOD -->
+    <div class="card" id="step3">
+      <div style="font-size: 3.5rem; margin-bottom: 10px;">🎶 🎧</div>
+      <h2 style="font-family: 'Fredoka', cursive; font-size: 1.7rem; color: #343a40; margin-bottom: 8px;">Set the Mood</h2>
+      <p style="font-size: 0.92rem; color: #6c757d; margin-bottom: 22px;">Let's turn on your favorite tunes! ✨</p>
+      <button class="btn-pink" onclick="playMusicAndNext()">Play Music 🎵</button>
+      <div class="step-dots">
+        <div class="dot"></div>
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+
+    <!-- 4. DECORATE THE ROOM -->
+    <div class="card" id="step4">
+      <div style="font-size: 3.5rem; margin-bottom: 10px;">🎀 🎈</div>
+      <h2 style="font-family: 'Fredoka', cursive; font-size: 1.7rem; color: #343a40; margin-bottom: 8px;">Decorate the Room</h2>
+      <p style="font-size: 0.92rem; color: #6c757d; margin-bottom: 22px;">Bringing some cuteness and sparkle!</p>
+      <button class="btn-pink" onclick="decorateRoom()">Decorate Now 🥳</button>
+      <div class="step-dots">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot active"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+
+    <!-- 5. RELEASE BALLOONS -->
+    <div class="card" id="step5">
+      <div style="font-size: 0.8rem; color: #ff6584; letter-spacing: 2px; font-weight: 700; margin-bottom: 8px;">CELEBRATION MODE</div>
+      <h1 style="font-family: 'Fredoka', cursive; font-size: 2.1rem; color: var(--pink-primary); margin-bottom: 6px;">Happy Birthday!</h1>
+      <p style="font-size: 0.95rem; color: #6c757d; margin-bottom: 24px;">A sweet special page made with lots of love.</p>
+      <button class="btn-pink" onclick="releaseBalloons()">Release the balloons 🎈</button>
+      <div class="step-dots">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot active"></div>
+      </div>
+    </div>
+
+    <!-- 6. CAKE TIME & CUT -->
+    <div class="card" id="step6">
+      <div style="font-size: 2.5rem; margin-bottom: 4px;">🥺 💖 ✨</div>
+      <h2 style="font-family: 'Fredoka', cursive; font-size: 1.8rem; color: var(--pink-primary);">Cake Time</h2>
+      <p style="font-size: 0.9rem; color: #868e96; margin-bottom: 15px;">Swipe across the cake to cut it 🍰</p>
+
+      <div class="cake-drag-area" id="cutArea">
+        <div style="font-size: 6rem; filter: drop-shadow(0 10px 18px rgba(0,0,0,0.12));">🎂</div>
+        <div class="cut-track"></div>
+        <div class="cut-slider" id="sliderKnob">🔪</div>
+      </div>
+
+      <p id="cutStatusText" style="font-size: 0.85rem; color: #ff4081; font-weight: 700; margin-top: 14px;">Swipe knife to cut (0%)</p>
+    </div>
+
+    <!-- 7. MAKE A WISH -->
+    <div class="card" id="step7">
+      <div style="font-size: 4.5rem; margin-bottom: 10px;">🐰 🎂 🕯️</div>
+      <h2 style="font-family: 'Fredoka', cursive; font-size: 1.8rem; color: var(--pink-primary); margin-bottom: 8px;">Make a Wish</h2>
+      <p style="font-size: 0.95rem; color: #6c757d; line-height: 1.5; margin-bottom: 22px;">Close your eyes, make a sweet wish, and tap below! ✨</p>
+      <button class="btn-pink" onclick="goToStep(8)">I Made My Wish 🌟</button>
+    </div>
+
+    <!-- 8. FLIP THESE BIRTHDAY WISHES -->
+    <div class="card" id="step8">
+      <h2 style="font-family: 'Fredoka', cursive; font-size: 1.6rem; color: var(--pink-primary); margin-bottom: 4px;">Flip these wishes 🥺💕</h2>
+      <p style="font-size: 0.85rem; color: #868e96; margin-bottom: 12px;">Each card holds a secret message for you.</p>
+
+      <div class="flip-grid">
+        <!-- Card 1 -->
+        <div class="flip-box" onclick="flipCard(this)">
+          <div class="flip-box-inner">
+            <div class="flip-front">
+              <span style="font-size: 2rem;">🎂 🍰</span>
+              <span class="tap-hint">Tap me ✨</span>
+            </div>
+            <div class="flip-back">
+              Happy Birthday to the most wonderful and supportive best friend in the world! 💖
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="flip-box" onclick="flipCard(this)">
+          <div class="flip-box-inner">
+            <div class="flip-front">
+              <span style="font-size: 2rem;">🎀 🐱</span>
+              <span class="tap-hint">Tap me ✨</span>
+            </div>
+            <div class="flip-back">
+              You are the reason for so many smiles and endless laughter. Thank you for everything! 🌸
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="flip-box" onclick="flipCard(this)">
+          <div class="flip-box-inner">
+            <div class="flip-front">
+              <span style="font-size: 2rem;">💌 🎁</span>
+              <span class="tap-hint">Tap me ✨</span>
+            </div>
+            <div class="flip-back">
+              May this year bring you all the happiness, success, and dreams you truly deserve! ✨
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-pink" id="finalLetterBtn" style="display: none;" onclick="goToStep(9)">Open Final Message 💌</button>
+    </div>
+
+    <!-- 9. FINAL LETTER / NOTEPAD MODAL -->
+    <div class="card" id="step9" style="padding: 16px;">
+      <div class="letter-paper">
+        <div class="letter-header">
+          <span>BESTIE-LETTER.TXT</span>
+          <span>WITH LOTS OF LOVE</span>
+        </div>
+        <h3 class="letter-title">Dear Bestie,</h3>
+        <p class="letter-body">
+          Happy Birthday to someone who makes life feel softer, brighter, and a lot more fun! ✨<br><br>
+          I hope this year gives you endless joy, unbreakable peace, and all the success in the world. You are truly rare, precious, and one of a kind.
+        </p>
+        <h2 style="font-family: 'Fredoka', cursive; color: #ff4081; font-size: 1.6rem; text-align: center; margin: 15px 0;">
+          I Love You My Dear Bestie! 💖
+        </h2>
+        <div class="letter-signature">Always & Forever ✨</div>
+      </div>
+
+      <button class="btn-pink" style="margin-top: 18px;" onclick="restartAll()">Restart Celebration 🔄</button>
+    </div>
+
   </div>
 
   <script>
     const audio = document.getElementById('bdayAudio');
-    const musicBtn = document.getElementById('musicToggle');
-    let isPlaying = false;
+    let flippedCount = 0;
 
-    function toggleAudio() {
-      if (isPlaying) {
-        audio.pause();
-        musicBtn.textContent = '🔇';
-      } else {
-        audio.play().then(() => {
-          musicBtn.textContent = '🎵';
-        }).catch(err => console.log('Playback error:', err));
-      }
-      isPlaying = !isPlaying;
-    }
-
-    function nextCard(cardNumber) {
+    function goToStep(stepNum) {
       document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
-      const activeCard = document.getElementById('card' + cardNumber);
-      activeCard.classList.add('active');
-
-      if (cardNumber === 2) {
-        if (!isPlaying) {
-          audio.play().then(() => {
-            isPlaying = true;
-            musicBtn.textContent = '🎵';
-          }).catch(() => {});
-        }
-      }
-
-      if (cardNumber === 3) {
-        launchLuxuryCelebration();
-      }
-
-      if (cardNumber === 4) {
-        launchHeartShower();
-      }
+      const nextCard = document.getElementById('step' + stepNum);
+      if (nextCard) nextCard.classList.add('active');
     }
 
-    let cutsMade = 0;
-    const cakeBox = document.getElementById('cakeBox');
-    const cut1 = document.getElementById('cut1');
-    const cut2 = document.getElementById('cut2');
-    const cakeSlice = document.getElementById('cakeSlice');
-    const stepGuide = document.getElementById('stepGuide');
-    const hintMsg = document.getElementById('hintMsg');
+    // "No" button cheeky effect
+    function runNoBtn() {
+      const no = document.getElementById('noBtn');
+      no.textContent = "Are you sure? 🥺";
+      no.style.transform = "scale(0.9)";
+    }
 
-    let startY = 0;
-    let isDragging = false;
+    // Turn lights on
+    function turnOnLights() {
+      document.body.classList.add('lights-on');
+      setTimeout(() => {
+        goToStep(3);
+      }, 700);
+    }
 
-    cakeBox.addEventListener('pointerdown', (e) => {
-      startY = e.clientY;
-      isDragging = true;
-    });
+    // Play Music
+    function playMusicAndNext() {
+      audio.play().catch(e => console.log('Audio autoplay prevented'));
+      goToStep(4);
+    }
 
-    cakeBox.addEventListener('pointermove', (e) => {
-      if (!isDragging) return;
-      let diff = e.clientY - startY;
+    // Decorate Room with Cats
+    function decorateRoom() {
+      document.getElementById('appScreen').classList.add('show-cats');
+      confetti({ particleCount: 40, spread: 60, origin: { y: 0.5 } });
+      setTimeout(() => {
+        goToStep(5);
+      }, 900);
+    }
 
-      if (diff > 55) {
-        isDragging = false;
-
-        if (cutsMade === 0) {
-          cutsMade = 1;
-          cut1.classList.add('cut-done');
-          confetti({ particleCount: 30, spread: 50, origin: { y: 0.65, x: 0.45 } });
-          
-          stepGuide.textContent = "Ab daayein (Right) side slide karein (2/2) 🔪";
-          hintMsg.textContent = "Cake ke daayein (Right) hisse par ungli slide karein";
-        } 
-        else if (cutsMade === 1) {
-          cutsMade = 2;
-          cut2.classList.add('cut-done');
-          
-          stepGuide.textContent = "Cake slice bahar aa gaya! 🍰✨";
-          hintMsg.textContent = "Yummy! Enjoy the piece 🎂";
-
-          // Piece 700ms baad aaram se bahar aayega
-          setTimeout(() => {
-            cakeSlice.classList.add('sliced-out');
-            
-            confetti({
-              particleCount: 75,
-              spread: 85,
-              origin: { y: 0.6 }
-            });
-          }, 700);
-
-          // Pura piece dekhne ke baad 3.5 second ka time milega
-          setTimeout(() => {
-            nextCard(3);
-          }, 3500);
-        }
+    // Release Balloons
+    function releaseBalloons() {
+      const emojis = ['🎈', '💖', '✨', '🌸', '🎀'];
+      for (let i = 0; i < 16; i++) {
+        setTimeout(() => {
+          const b = document.createElement('div');
+          b.className = 'balloon';
+          b.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+          b.style.left = Math.random() * 85 + 5 + '%';
+          b.style.animationDuration = (Math.random() * 2 + 4) + 's';
+          document.body.appendChild(b);
+          setTimeout(() => b.remove(), 6000);
+        }, i * 150);
       }
-    });
 
-    cakeBox.addEventListener('pointerup', () => { isDragging = false; });
-    cakeBox.addEventListener('pointercancel', () => { isDragging = false; });
-
-    function launchLuxuryCelebration() {
-      const duration = 3.5 * 1000;
-      const end = Date.now() + duration;
-
-      (function frame() {
-        confetti({
-          particleCount: 5,
-          angle: 60,
-          spread: 55,
-          origin: { x: 0 },
-          colors: ['#ffd700', '#ff4081', '#7c4dff', '#ffffff']
-        });
-        confetti({
-          particleCount: 5,
-          angle: 120,
-          spread: 55,
-          origin: { x: 1 },
-          colors: ['#ffd700', '#ff4081', '#7c4dff', '#ffffff']
-        });
-
-        if (Date.now() < end) {
-          requestAnimationFrame(frame);
-        }
-      }());
+      setTimeout(() => {
+        goToStep(6);
+        initCakeCut();
+      }, 2500);
     }
 
-    function launchHeartShower() {
-      confetti({
-        particleCount: 80,
-        spread: 100,
-        origin: { y: 0.6 },
-        shapes: ['circle'],
-        colors: ['#ff3366', '#ff80ab', '#ffffff']
-      });
-    }
-  </script>
-</body>
-</html>
+    // Cake Knife Slider Logic
+    function initCakeCut() {
+      const knob = document.getElementById('sliderKnob');
+      const cutArea = document.getElementById('cutArea');
+      const statusText = document.getElementById('cutStatusText');
+      let isCutting = false;
+      let startX = 0;
+      let trackWidth = 0;
+
+      function onStart(e) {
+        isCutting = true;
+        startX = e.touches ? e.touches[0].clientX : e.clientX;
+        trackWidth = cutArea.offsetWidth * 0.65;
+      }
+
+      function onMove(e) {
+        if (!isCutting) return;
+        const currentX = e.touches ? e.touches[0].clientX : e.clientX;
+        let delta = currentX - startX;
+        if (delta < 0) delta = 0;
+        if (delta > trackWidth
