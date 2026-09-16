@@ -5,12 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-select=none">
   <title>Happy Birthday Bestie! ✨</title>
   
-  <!-- Premium Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
   
-  <!-- Canvas Confetti Library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
@@ -42,7 +40,6 @@
       color: #fff;
     }
 
-    /* Floating Ambient Background Bubbles */
     .bg-shape {
       position: absolute;
       border-radius: 50%;
@@ -63,7 +60,6 @@
       100% { transform: translateY(-115vh) rotate(360deg); opacity: 0; }
     }
 
-    /* Music Floating Toggle */
     .music-btn {
       position: fixed;
       top: 18px;
@@ -86,7 +82,6 @@
     }
     .music-btn:active { transform: scale(0.9); }
 
-    /* Glass Container */
     .card {
       position: relative;
       width: 90%;
@@ -155,7 +150,6 @@
       transform: scale(0.95);
     }
 
-    /* Interactive Cake Container */
     .cake-container {
       position: relative;
       width: 260px;
@@ -165,7 +159,6 @@
       filter: drop-shadow(0 15px 25px rgba(0,0,0,0.35));
     }
 
-    /* Candle Flame Animation */
     @keyframes flicker {
       0%, 100% { transform: scale(1) rotate(-1deg); opacity: 0.95; }
       50% { transform: scale(1.1, 1.25) rotate(2deg); opacity: 1; filter: drop-shadow(0 0 12px #ffc107); }
@@ -175,7 +168,6 @@
       animation: flicker 1s infinite alternate ease-in-out;
     }
 
-    /* Realistic Cut Lines */
     .cut-line {
       position: absolute;
       width: 4px;
@@ -200,7 +192,6 @@
       height: 110px;
     }
 
-    /* Cake Slice Pop-out Animation */
     #cakeSlice {
       transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.8s ease;
       transform-origin: center center;
@@ -223,7 +214,6 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
-    /* Party Characters */
     .party-icons {
       display: flex;
       justify-content: center;
@@ -243,7 +233,6 @@
       to { transform: translateY(-20px); }
     }
 
-    /* Final Screen */
     .heart-icon {
       font-size: 5rem;
       display: inline-block;
@@ -273,22 +262,18 @@
 </head>
 <body>
 
-  <!-- Floating Shapes -->
   <div class="bg-shape shape1"></div>
   <div class="bg-shape shape2"></div>
   <div class="bg-shape shape3"></div>
 
-  <!-- Audio Player with your uploaded song -->
   <audio id="bdayAudio" loop preload="auto">
     <source src="sub_clair-happy-birthday-578363.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Mute / Unmute Button -->
   <button class="music-btn" id="musicToggle" onclick="toggleAudio()" title="Sound On/Off">
     🎵
   </button>
 
-  <!-- SCREEN 1: Welcome -->
   <div class="card active" id="card1">
     <div style="font-size: 3.4rem; margin-bottom: 12px;">🎉 🎂 ✨</div>
     <h1 class="title">Happy Birthday!</h1>
@@ -299,39 +284,30 @@
     </button>
   </div>
 
-  <!-- SCREEN 2: 2-Cut Interactive Cake -->
   <div class="card" id="card2">
     <h1 class="title" style="font-size: 2.6rem;">Cut The Cake</h1>
     <p class="subtitle" id="stepGuide" style="margin-bottom: 8px;">Baayein (Left) side slide karein (1/2) 🔪</p>
     
     <div class="cake-container" id="cakeBox">
       <svg viewBox="0 0 240 220" width="100%" height="100%">
-        <!-- Base Plate -->
         <ellipse cx="120" cy="205" rx="105" ry="12" fill="rgba(255,255,255,0.2)"/>
         <ellipse cx="120" cy="200" rx="95" ry="10" fill="#f8f9fa"/>
         <path d="M40 200 C 40 210, 200 210, 200 200" fill="#e9ecef"/>
 
-        <!-- Main Body (Left & Right remaining) -->
         <g id="cakeMain">
-          <!-- Bottom Tier Background -->
           <path d="M45 140 Q 120 155 195 140 L 195 195 Q 120 210 45 195 Z" fill="#ff4081"/>
           <path d="M45 140 Q 120 155 195 140 Q 120 125 45 140" fill="#ff79b0"/>
           
-          <!-- Top Tier -->
           <path d="M65 95 Q 120 108 175 95 L 175 142 Q 120 155 65 142 Z" fill="#7c4dff"/>
           <path d="M65 95 Q 120 108 175 95 Q 120 82 65 95" fill="#b47cff"/>
-          <!-- Top Cream Frosting -->
           <path d="M65 102 Q 80 115 95 102 Q 110 115 125 102 Q 140 115 155 102 Q 170 115 175 102" fill="none" stroke="#ffe082" stroke-width="4" stroke-linecap="round"/>
         </g>
 
-        <!-- Center Cake Slice (Ye slide hoke bahar aayega) -->
         <g id="cakeSlice">
-          <!-- Slice body -->
           <path d="M98 100 L 142 100 L 152 195 Q 120 205 88 195 Z" fill="#e91e63" stroke="#fff" stroke-width="1.5"/>
           <path d="M98 100 Q 120 106 142 100 L 138 142 Q 120 148 102 142 Z" fill="#673ab7"/>
           <ellipse cx="120" cy="100" rx="22" ry="5" fill="#ffd54f"/>
           
-          <!-- Candle on Slice -->
           <rect x="117" y="55" width="6" height="42" rx="3" fill="#fff"/>
           <line x1="120" y1="55" x2="120" y2="47" stroke="#333" stroke-width="2"/>
           <g class="candle-flame">
@@ -341,7 +317,6 @@
         </g>
       </svg>
 
-      <!-- Laser Cuts -->
       <div class="cut-line cut-line-1" id="cut1"></div>
       <div class="cut-line cut-line-2" id="cut2"></div>
     </div>
@@ -352,7 +327,6 @@
     </div>
   </div>
 
-  <!-- SCREEN 3: Party Celebration -->
   <div class="card" id="card3">
     <div class="party-icons">
       <span>🐱</span>
@@ -367,7 +341,6 @@
     </button>
   </div>
 
-  <!-- SCREEN 4: Bestie Finale -->
   <div class="card" id="card4">
     <div class="heart-icon">💖</div>
     <h1 class="love-heading">I Love You<br>My Dear Bestie!</h1>
@@ -415,7 +388,6 @@
       }
     }
 
-    // 2-Step Cake Cutting Logic
     let cutsMade = 0;
     const cakeBox = document.getElementById('cakeBox');
     const cut1 = document.getElementById('cut1');
@@ -436,12 +408,10 @@
       if (!isDragging) return;
       let diff = e.clientY - startY;
 
-      // Slide down threshold
       if (diff > 55) {
         isDragging = false;
 
         if (cutsMade === 0) {
-          // Pehla cut (Left side)
           cutsMade = 1;
           cut1.classList.add('cut-done');
           confetti({ particleCount: 25, spread: 45, origin: { y: 0.65, x: 0.45 } });
@@ -450,14 +420,12 @@
           hintMsg.textContent = "Cake ke daayein (Right) hisse par ungli slide karein";
         } 
         else if (cutsMade === 1) {
-          // Doosra cut (Right side)
           cutsMade = 2;
           cut2.classList.add('cut-done');
           
           stepGuide.textContent = "Cake slice bahar aa gaya! 🍰✨";
           hintMsg.textContent = "Yummy! Enjoy the piece 🎂";
 
-          // Piece bahar aane ka animation
           setTimeout(() => {
             cakeSlice.classList.add('sliced-out');
             
@@ -468,7 +436,6 @@
             });
           }, 350);
 
-          // Agle page par jump
           setTimeout(() => {
             nextCard(3);
           }, 1500);
@@ -479,7 +446,6 @@
     cakeBox.addEventListener('pointerup', () => { isDragging = false; });
     cakeBox.addEventListener('pointercancel', () => { isDragging = false; });
 
-    // Grand Celebration Confetti
     function launchLuxuryCelebration() {
       const duration = 3.5 * 1000;
       const end = Date.now() + duration;
@@ -506,389 +472,6 @@
       }());
     }
 
-    // Floating Hearts Shower
-    function launchHeartShower() {
-      confetti({
-        particleCount: 80,
-        spread: 100,
-        origin: { y: 0.6 },
-        shapes: ['circle'],
-        colors: ['#ff3366', '#ff80ab', '#ffffff']
-      });
-    }
-  </script>
-</body>
-</html>
-      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .card.active {
-      display: flex;
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-
-    /* Typography */
-    .title {
-      font-family: 'Dancing Script', cursive;
-      font-size: 3rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, #fff 30%, #ffc2df 70%, #ffd166 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 10px;
-      text-shadow: 0 10px 25px rgba(255, 64, 129, 0.3);
-    }
-
-    .subtitle {
-      font-size: 1.05rem;
-      color: rgba(255, 255, 255, 0.85);
-      line-height: 1.5;
-      font-weight: 300;
-      margin-bottom: 28px;
-    }
-
-    /* Premium Button */
-    .btn {
-      background: linear-gradient(135deg, #ff4081 0%, #ff6b8b 50%, #ff8e53 100%);
-      border: none;
-      outline: none;
-      color: white;
-      padding: 14px 34px;
-      font-size: 1.08rem;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      border-radius: 50px;
-      box-shadow: 0 12px 25px rgba(255, 64, 129, 0.45), inset 0 1px 2px rgba(255,255,255,0.4);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-    .btn:active {
-      transform: scale(0.95);
-      box-shadow: 0 6px 15px rgba(255, 64, 129, 0.4);
-    }
-
-    /* Interactive Cake Container */
-    .cake-container {
-      position: relative;
-      width: 250px;
-      height: 230px;
-      margin: 10px 0 20px 0;
-      touch-action: none;
-      filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3));
-    }
-
-    /* Candle Flame Animation */
-    @keyframes flicker {
-      0%, 100% { transform: scale(1) rotate(-1deg); opacity: 0.95; }
-      50% { transform: scale(1.1, 1.25) rotate(2deg); opacity: 1; filter: drop-shadow(0 0 12px #ffc107); }
-    }
-    .candle-flame {
-      transform-origin: center bottom;
-      animation: flicker 1s infinite alternate ease-in-out;
-    }
-
-    /* Cutting Line & Laser effect */
-    .laser-cut {
-      position: absolute;
-      top: 35px;
-      left: 50%;
-      width: 4px;
-      height: 0;
-      background: linear-gradient(180deg, #fff, #ffd54f, #ff4081);
-      border-radius: 4px;
-      box-shadow: 0 0 15px #ffd54f, 0 0 25px #ff4081;
-      transform: translateX(-50%);
-      transition: height 0.35s ease-out;
-      pointer-events: none;
-    }
-    .laser-cut.cut-done {
-      height: 175px;
-    }
-
-    /* Slide Prompt Tooltip */
-    .slide-hint {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.9rem;
-      background: rgba(255, 255, 255, 0.15);
-      padding: 7px 16px;
-      border-radius: 20px;
-      color: rgba(255, 255, 255, 0.9);
-      animation: pulseGlow 1.8s infinite;
-    }
-    @keyframes pulseGlow {
-      0%, 100% { opacity: 0.7; transform: scale(0.98); }
-      50% { opacity: 1; transform: scale(1.02); }
-    }
-
-    /* Party Screen Characters */
-    .party-icons {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      font-size: 3.8rem;
-      margin: 10px 0 25px 0;
-    }
-    .party-icons span {
-      display: inline-block;
-      animation: jump 0.7s infinite alternate cubic-bezier(0.2, 0.8, 0.4, 1);
-    }
-    .party-icons span:nth-child(2) { animation-delay: 0.15s; }
-    .party-icons span:nth-child(3) { animation-delay: 0.3s; }
-
-    @keyframes jump {
-      from { transform: translateY(0) scale(1); }
-      to { transform: translateY(-22px) scale(1.08); }
-    }
-
-    /* Final Screen Heart Glow */
-    .heart-wrapper {
-      position: relative;
-      margin: 10px 0 25px 0;
-    }
-    .heart-icon {
-      font-size: 5rem;
-      display: inline-block;
-      color: #ff3366;
-      animation: heartPulse 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
-      filter: drop-shadow(0 0 25px rgba(255, 51, 102, 0.6));
-    }
-    @keyframes heartPulse {
-      0% { transform: scale(1); }
-      14% { transform: scale(1.22); }
-      28% { transform: scale(1); }
-      42% { transform: scale(1.15); }
-      70% { transform: scale(1); }
-    }
-
-    .love-heading {
-      font-family: 'Dancing Script', cursive;
-      font-size: 3.5rem;
-      font-weight: 700;
-      color: #fff;
-      text-shadow: 0 0 20px rgba(255, 105, 180, 0.7);
-      margin-bottom: 10px;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Floating Ambient Bubbles -->
-  <div class="bg-shape shape1"></div>
-  <div class="bg-shape shape2"></div>
-  <div class="bg-shape shape3"></div>
-
-  <!-- Background Music Audio -->
-  <audio id="bdayAudio" loop preload="auto">
-  <source src="sub_clair-happy-birthday-578363.mp3" type="audio/mpeg">
-</audio>
-
-
-  <!-- Mute / Unmute Button -->
-  <button class="music-btn" id="musicToggle" onclick="toggleAudio()" title="Sound On/Off">
-    🎵
-  </button>
-
-  <!-- SCREEN 1: Welcome Banner -->
-  <div class="card active" id="card1">
-    <div style="font-size: 3.2rem; margin-bottom: 12px; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.2));">✨🎉🎂</div>
-    <h1 class="title">Happy Birthday!</h1>
-    <p class="subtitle">Wishing you a day filled with love, laughter, and endless magical moments!</p>
-    <button class="btn" onclick="nextCard(2)">
-      <span>Cut The Cake</span>
-      <span style="font-size: 1.3rem;">🎂</span>
-    </button>
-  </div>
-
-  <!-- SCREEN 2: Modern Interactive Cake Cutting -->
-  <div class="card" id="card2">
-    <h1 class="title" style="font-size: 2.6rem;">Make a Wish</h1>
-    <p class="subtitle" style="margin-bottom: 10px;">Cake par ungli upar se neeche slide karein ✨</p>
-    
-    <div class="cake-container" id="cakeBox">
-      <!-- High Quality SVG Cake -->
-      <svg viewBox="0 0 240 220" width="100%" height="100%">
-        <!-- Stand Plate -->
-        <ellipse cx="120" cy="205" rx="105" ry="12" fill="rgba(255,255,255,0.2)"/>
-        <ellipse cx="120" cy="200" rx="95" ry="10" fill="#f8f9fa"/>
-        <path d="M40 200 C 40 210, 200 210, 200 200" fill="#e9ecef"/>
-
-        <!-- Bottom Tier -->
-        <path d="M45 140 Q 120 155 195 140 L 195 195 Q 120 210 45 195 Z" fill="#ff4081"/>
-        <path d="M45 140 Q 120 155 195 140 Q 120 125 45 140" fill="#ff79b0"/>
-        <!-- Cream decoration bottom -->
-        <path d="M45 148 Q 60 162 75 148 Q 90 162 105 148 Q 120 162 135 148 Q 150 162 165 148 Q 180 162 195 148" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
-
-        <!-- Top Tier -->
-        <path d="M65 95 Q 120 108 175 95 L 175 142 Q 120 155 65 142 Z" fill="#7c4dff"/>
-        <path d="M65 95 Q 120 108 175 95 Q 120 82 65 95" fill="#b47cff"/>
-        <!-- Cream drip top -->
-        <path d="M65 102 Q 80 115 95 102 Q 110 115 125 102 Q 140 115 155 102 Q 170 115 175 102" fill="none" stroke="#ffe082" stroke-width="4" stroke-linecap="round"/>
-
-        <!-- Candle Base -->
-        <rect x="116" y="48" width="8" height="42" rx="4" fill="url(#candleGradient)"/>
-        <!-- Candle Stripes -->
-        <line x1="116" y1="58" x2="124" y2="62" stroke="#ff4081" stroke-width="2"/>
-        <line x1="116" y1="70" x2="124" y2="74" stroke="#ff4081" stroke-width="2"/>
-        <!-- Candle Wick -->
-        <line x1="120" y1="48" x2="120" y2="40" stroke="#424242" stroke-width="2"/>
-        <!-- Flame Glow & Core -->
-        <g class="candle-flame">
-          <ellipse cx="120" cy="32" rx="7" ry="12" fill="#ffd54f"/>
-          <ellipse cx="120" cy="34" rx="3.5" ry="6" fill="#ff3d00"/>
-        </g>
-
-        <!-- Gradients definition -->
-        <defs>
-          <linearGradient id="candleGradient" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stop-color="#fff"/>
-            <stop offset="100%" stop-color="#ffe0b2"/>
-          </linearGradient>
-        </defs>
-      </svg>
-      <div class="laser-cut" id="laserLine"></div>
-    </div>
-
-    <div class="slide-hint">
-      <span>👇</span>
-      <span>Upar se neeche slide karein</span>
-    </div>
-  </div>
-
-  <!-- SCREEN 3: Celebration Time -->
-  <div class="card" id="card3">
-    <div class="party-icons">
-      <span>🐱</span>
-      <span>🐻</span>
-      <span>🐰</span>
-    </div>
-    <h1 class="title">Woohoo! 🎉</h1>
-    <p class="subtitle">Happy Birthday to the most amazing person! May all your dreams turn into reality today!</p>
-    <button class="btn" onclick="nextCard(4)">
-      <span>Next Surprise</span>
-      <span>💌</span>
-    </button>
-  </div>
-
-    <!-- SCREEN 4: Bestie Finale -->
-  <div class="card" id="card4">
-    <div class="heart-wrapper">
-      <div class="heart-icon">💖</div>
-    </div>
-    <h1 class="love-heading" style="font-size: 2.6rem;">I Love You My Dear Bestie!</h1>
-    <p class="subtitle" style="font-size: 1.15rem; color: #ffe3ee;">Thank you for being the sweetest and best friend forever! ✨</p>
-    <div style="font-size: 1.5rem; opacity: 0.8; letter-spacing: 6px; margin-top: 10px;">🌟 👯‍♀️ 🌟</div>
-  </div>
->
-
-  <script>
-    const audio = document.getElementById('bdayAudio');
-    const musicBtn = document.getElementById('musicToggle');
-    let isPlaying = false;
-
-    function toggleAudio() {
-      if (isPlaying) {
-        audio.pause();
-        musicBtn.textContent = '🔇';
-      } else {
-        audio.play().then(() => {
-          musicBtn.textContent = '🎵';
-        }).catch(err => console.log('Playback error:', err));
-      }
-      isPlaying = !isPlaying;
-    }
-
-    function nextCard(cardNumber) {
-      document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
-      const activeCard = document.getElementById('card' + cardNumber);
-      activeCard.classList.add('active');
-
-      if (cardNumber === 2) {
-        // Start background music seamlessly on first interaction
-        if (!isPlaying) {
-          audio.play().then(() => {
-            isPlaying = true;
-            musicBtn.textContent = '🎵';
-          }).catch(() => {});
-        }
-      }
-
-      if (cardNumber === 3) {
-        launchLuxuryCelebration();
-      }
-
-      if (cardNumber === 4) {
-        launchHeartShower();
-      }
-    }
-
-    // Interactive Swipe to Cut
-    const cakeBox = document.getElementById('cakeBox');
-    const laserLine = document.getElementById('laserLine');
-    let startY = 0;
-    let isDragging = false;
-
-    cakeBox.addEventListener('pointerdown', (e) => {
-      startY = e.clientY;
-      isDragging = true;
-    });
-
-    cakeBox.addEventListener('pointermove', (e) => {
-      if (!isDragging) return;
-      let diff = e.clientY - startY;
-      if (diff > 70) {
-        isDragging = false;
-        laserLine.classList.add('cut-done');
-        
-        // Small initial confetti burst on cut
-        confetti({
-          particleCount: 50,
-          spread: 60,
-          origin: { y: 0.65 }
-        });
-
-        setTimeout(() => {
-          nextCard(3);
-        }, 550);
-      }
-    });
-
-    cakeBox.addEventListener('pointerup', () => { isDragging = false; });
-    cakeBox.addEventListener('pointercancel', () => { isDragging = false; });
-
-    // Premium Golden & Foil Confetti Blast
-    function launchLuxuryCelebration() {
-      const duration = 3.5 * 1000;
-      const end = Date.now() + duration;
-
-      (function frame() {
-        confetti({
-          particleCount: 5,
-          angle: 60,
-          spread: 55,
-          origin: { x: 0 },
-          colors: ['#ffd700', '#ff4081', '#7c4dff', '#ffffff']
-        });
-        confetti({
-          particleCount: 5,
-          angle: 120,
-          spread: 55,
-          origin: { x: 1 },
-          colors: ['#ffd700', '#ff4081', '#7c4dff', '#ffffff']
-        });
-
-        if (Date.now() < end) {
-          requestAnimationFrame(frame);
-        }
-      }());
-    }
-
-    // Floating Hearts Shower on Last Screen
     function launchHeartShower() {
       confetti({
         particleCount: 80,
