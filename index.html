@@ -43,7 +43,6 @@
       background: linear-gradient(180deg, #ffeef4 0%, #ffdce8 50%, #fff5f8 100%);
     }
 
-    /* Screen Wrapper */
     .app-screen {
       width: 100%;
       max-width: 420px;
@@ -57,7 +56,6 @@
       overflow: hidden;
     }
 
-    /* String Lights at Top */
     .fairy-lights {
       position: absolute;
       top: 0;
@@ -91,7 +89,6 @@
       to { filter: drop-shadow(0 0 12px #ff4081); opacity: 1; transform: scale(1.08); }
     }
 
-    /* Cute Mascot Cats */
     .cute-cat {
       position: absolute;
       font-size: 3.5rem;
@@ -99,22 +96,10 @@
       opacity: 0;
       transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-    .cute-cat.top-cat {
-      top: 60px;
-      right: 15px;
-      transform: translateY(-40px) rotate(15deg);
-    }
-    .cute-cat.bottom-cat {
-      bottom: 25px;
-      left: 15px;
-      transform: translateY(40px) rotate(-15deg);
-    }
-    .show-cats .cute-cat {
-      opacity: 1;
-      transform: translateY(0) rotate(0deg);
-    }
+    .cute-cat.top-cat { top: 60px; right: 15px; transform: translateY(-40px) rotate(15deg); }
+    .cute-cat.bottom-cat { bottom: 25px; left: 15px; transform: translateY(40px) rotate(-15deg); }
+    .show-cats .cute-cat { opacity: 1; transform: translateY(0) rotate(0deg); }
 
-    /* Pastel Floating Balloons */
     .balloon {
       position: absolute;
       bottom: -100px;
@@ -128,7 +113,6 @@
       100% { transform: translateY(-110vh) rotate(20deg); opacity: 0; }
     }
 
-    /* Core Card Design */
     .card {
       background: var(--card-white);
       width: 100%;
@@ -150,7 +134,6 @@
       100% { opacity: 1; transform: scale(1) translateY(0); }
     }
 
-    /* Dark Mode Step 1 & 2 styles */
     .dark-text {
       color: #eae6f5;
       font-size: 1.6rem;
@@ -168,7 +151,6 @@
       50% { transform: translateY(-8px); }
     }
 
-    /* Buttons */
     .btn-pink {
       background: var(--pink-btn);
       color: #fff;
@@ -207,7 +189,6 @@
       cursor: pointer;
     }
 
-    /* Step Indicators (Dots) */
     .step-dots {
       display: flex;
       gap: 6px;
@@ -225,7 +206,6 @@
       background: var(--pink-primary);
     }
 
-    /* Cake Cut Drag Area */
     .cake-drag-area {
       width: 100%;
       position: relative;
@@ -263,7 +243,6 @@
       transition: left 0.1s ease;
     }
 
-    /* Flip Cards Section */
     .flip-grid {
       display: flex;
       flex-direction: column;
@@ -322,7 +301,6 @@
       font-weight: 600;
     }
 
-    /* Final Notepad Letter Modal */
     .letter-paper {
       background: #fffdfa;
       border-radius: 18px;
@@ -366,14 +344,12 @@
 </head>
 <body>
 
-  <!-- Hidden Audio Player with your song -->
   <audio id="bdayAudio" loop preload="auto">
     <source src="sub_clair-happy-birthday-578363.mp3" type="audio/mpeg">
   </audio>
 
   <div class="app-screen" id="appScreen">
 
-    <!-- Fairy Lights Header -->
     <div class="fairy-lights">
       <span class="bulb">💖</span>
       <span class="bulb">💡</span>
@@ -384,11 +360,10 @@
       <span class="bulb">🎉</span>
     </div>
 
-    <!-- Cute Birthday Cats -->
     <div class="cute-cat top-cat">🐱🎂</div>
     <div class="cute-cat bottom-cat">🥳🐱</div>
 
-    <!-- 1. INTRO / READY POPUP -->
+    <!-- 1. INTRO -->
     <div class="card active" id="step1" style="background: #fff;">
       <div style="font-size: 0.8rem; color: #ff6584; letter-spacing: 2px; font-weight: 700; margin-bottom: 12px;">🌸 BESTIE.INTRO 🌸</div>
       <div style="font-size: 4rem; margin-bottom: 8px;">🎂</div>
@@ -400,7 +375,7 @@
       </div>
     </div>
 
-    <!-- 2. ROOM IS DARK -->
+    <!-- 2. DARK ROOM -->
     <div class="card" id="step2" style="background: transparent; border: none; box-shadow: none;">
       <div class="dark-moon">🌙 ✨</div>
       <h2 class="dark-text">The room is dark.</h2>
@@ -413,7 +388,7 @@
       </div>
     </div>
 
-    <!-- 3. SET THE MOOD -->
+    <!-- 3. MUSIC -->
     <div class="card" id="step3">
       <div style="font-size: 3.5rem; margin-bottom: 10px;">🎶 🎧</div>
       <h2 style="font-family: 'Fredoka', cursive; font-size: 1.7rem; color: #343a40; margin-bottom: 8px;">Set the Mood</h2>
@@ -427,7 +402,7 @@
       </div>
     </div>
 
-    <!-- 4. DECORATE THE ROOM -->
+    <!-- 4. DECORATE -->
     <div class="card" id="step4">
       <div style="font-size: 3.5rem; margin-bottom: 10px;">🎀 🎈</div>
       <h2 style="font-family: 'Fredoka', cursive; font-size: 1.7rem; color: #343a40; margin-bottom: 8px;">Decorate the Room</h2>
@@ -441,7 +416,7 @@
       </div>
     </div>
 
-    <!-- 5. RELEASE BALLOONS -->
+    <!-- 5. BALLOONS -->
     <div class="card" id="step5">
       <div style="font-size: 0.8rem; color: #ff6584; letter-spacing: 2px; font-weight: 700; margin-bottom: 8px;">CELEBRATION MODE</div>
       <h1 style="font-family: 'Fredoka', cursive; font-size: 2.1rem; color: var(--pink-primary); margin-bottom: 6px;">Happy Birthday!</h1>
@@ -455,7 +430,7 @@
       </div>
     </div>
 
-    <!-- 6. CAKE TIME & CUT -->
+    <!-- 6. CAKE -->
     <div class="card" id="step6">
       <div style="font-size: 2.5rem; margin-bottom: 4px;">🥺 💖 ✨</div>
       <h2 style="font-family: 'Fredoka', cursive; font-size: 1.8rem; color: var(--pink-primary);">Cake Time</h2>
@@ -470,7 +445,7 @@
       <p id="cutStatusText" style="font-size: 0.85rem; color: #ff4081; font-weight: 700; margin-top: 14px;">Swipe knife to cut (0%)</p>
     </div>
 
-    <!-- 7. MAKE A WISH -->
+    <!-- 7. WISH -->
     <div class="card" id="step7">
       <div style="font-size: 4.5rem; margin-bottom: 10px;">🐰 🎂 🕯️</div>
       <h2 style="font-family: 'Fredoka', cursive; font-size: 1.8rem; color: var(--pink-primary); margin-bottom: 8px;">Make a Wish</h2>
@@ -478,48 +453,30 @@
       <button class="btn-pink" onclick="goToStep(8)">I Made My Wish 🌟</button>
     </div>
 
-    <!-- 8. FLIP THESE BIRTHDAY WISHES -->
+    <!-- 8. FLIP CARDS -->
     <div class="card" id="step8">
       <h2 style="font-family: 'Fredoka', cursive; font-size: 1.6rem; color: var(--pink-primary); margin-bottom: 4px;">Flip these wishes 🥺💕</h2>
       <p style="font-size: 0.85rem; color: #868e96; margin-bottom: 12px;">Each card holds a secret message for you.</p>
 
       <div class="flip-grid">
-        <!-- Card 1 -->
         <div class="flip-box" onclick="flipCard(this)">
           <div class="flip-box-inner">
-            <div class="flip-front">
-              <span style="font-size: 2rem;">🎂 🍰</span>
-              <span class="tap-hint">Tap me ✨</span>
-            </div>
-            <div class="flip-back">
-              Happy Birthday to the most wonderful and supportive best friend in the world! 💖
-            </div>
+            <div class="flip-front"><span style="font-size: 2rem;">🎂 🍰</span><span class="tap-hint">Tap me ✨</span></div>
+            <div class="flip-back">Happy Birthday to the most wonderful and supportive best friend in the world! 💖</div>
           </div>
         </div>
 
-        <!-- Card 2 -->
         <div class="flip-box" onclick="flipCard(this)">
           <div class="flip-box-inner">
-            <div class="flip-front">
-              <span style="font-size: 2rem;">🎀 🐱</span>
-              <span class="tap-hint">Tap me ✨</span>
-            </div>
-            <div class="flip-back">
-              You are the reason for so many smiles and endless laughter. Thank you for everything! 🌸
-            </div>
+            <div class="flip-front"><span style="font-size: 2rem;">🎀 🐱</span><span class="tap-hint">Tap me ✨</span></div>
+            <div class="flip-back">You are the reason for so many smiles and endless laughter. Thank you for everything! 🌸</div>
           </div>
         </div>
 
-        <!-- Card 3 -->
         <div class="flip-box" onclick="flipCard(this)">
           <div class="flip-box-inner">
-            <div class="flip-front">
-              <span style="font-size: 2rem;">💌 🎁</span>
-              <span class="tap-hint">Tap me ✨</span>
-            </div>
-            <div class="flip-back">
-              May this year bring you all the happiness, success, and dreams you truly deserve! ✨
-            </div>
+            <div class="flip-front"><span style="font-size: 2rem;">💌 🎁</span><span class="tap-hint">Tap me ✨</span></div>
+            <div class="flip-back">May this year bring you all the happiness, success, and dreams you truly deserve! ✨</div>
           </div>
         </div>
       </div>
@@ -527,13 +484,10 @@
       <button class="btn-pink" id="finalLetterBtn" style="display: none;" onclick="goToStep(9)">Open Final Message 💌</button>
     </div>
 
-    <!-- 9. FINAL LETTER / NOTEPAD MODAL -->
+    <!-- 9. FINAL LETTER -->
     <div class="card" id="step9" style="padding: 16px;">
       <div class="letter-paper">
-        <div class="letter-header">
-          <span>BESTIE-LETTER.TXT</span>
-          <span>WITH LOTS OF LOVE</span>
-        </div>
+        <div class="letter-header"><span>BESTIE-LETTER.TXT</span><span>WITH LOTS OF LOVE</span></div>
         <h3 class="letter-title">Dear Bestie,</h3>
         <p class="letter-body">
           Happy Birthday to someone who makes life feel softer, brighter, and a lot more fun! ✨<br><br>
@@ -560,37 +514,28 @@
       if (nextCard) nextCard.classList.add('active');
     }
 
-    // "No" button cheeky effect
     function runNoBtn() {
       const no = document.getElementById('noBtn');
       no.textContent = "Are you sure? 🥺";
       no.style.transform = "scale(0.9)";
     }
 
-    // Turn lights on
     function turnOnLights() {
       document.body.classList.add('lights-on');
-      setTimeout(() => {
-        goToStep(3);
-      }, 700);
+      setTimeout(() => { goToStep(3); }, 700);
     }
 
-    // Play Music
     function playMusicAndNext() {
-      audio.play().catch(e => console.log('Audio autoplay prevented'));
+      audio.play().catch(e => console.log('Audio error'));
       goToStep(4);
     }
 
-    // Decorate Room with Cats
     function decorateRoom() {
       document.getElementById('appScreen').classList.add('show-cats');
       confetti({ particleCount: 40, spread: 60, origin: { y: 0.5 } });
-      setTimeout(() => {
-        goToStep(5);
-      }, 900);
+      setTimeout(() => { goToStep(5); }, 900);
     }
 
-    // Release Balloons
     function releaseBalloons() {
       const emojis = ['🎈', '💖', '✨', '🌸', '🎀'];
       for (let i = 0; i < 16; i++) {
@@ -611,7 +556,6 @@
       }, 2500);
     }
 
-    // Cake Knife Slider Logic
     function initCakeCut() {
       const knob = document.getElementById('sliderKnob');
       const cutArea = document.getElementById('cutArea');
@@ -631,4 +575,51 @@
         const currentX = e.touches ? e.touches[0].clientX : e.clientX;
         let delta = currentX - startX;
         if (delta < 0) delta = 0;
-        if (delta > trackWidth
+        if (delta > trackWidth) delta = trackWidth;
+
+        const percent = Math.round((delta / trackWidth) * 100);
+        knob.style.left = (15 + (delta / cutArea.offsetWidth) * 100) + '%';
+        statusText.textContent = `Cut Progress: ${percent}%`;
+
+        if (percent >= 90) {
+          isCutting = false;
+          statusText.textContent = "Cake Cut! Happy Birthday! 🍰✨";
+          confetti({ particleCount: 75, spread: 80, origin: { y: 0.6 } });
+          setTimeout(() => { goToStep(7); }, 1400);
+        }
+      }
+
+      function onEnd() { isCutting = false; }
+
+      knob.addEventListener('mousedown', onStart);
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('mouseup', onEnd);
+
+      knob.addEventListener('touchstart', onStart);
+      window.addEventListener('touchmove', onMove);
+      window.addEventListener('touchend', onEnd);
+    }
+
+    
+            function flipCard(cardEl) {
+      if (!cardEl.classList.contains('flipped')) {
+        cardEl.classList.add('flipped');
+        flippedCount++;
+        confetti({ particleCount: 20, spread: 45, origin: { y: 0.7 } });
+        
+        if (flippedCount >= 3) {
+          setTimeout(() => {
+            const btn = document.getElementById('finalLetterBtn');
+            btn.style.display = 'inline-flex';
+            btn.scrollIntoView({ behavior: 'smooth' });
+          }, 400);
+        }
+      }
+    }
+
+    function restartAll() {
+      location.reload();
+    }
+  </script>
+</body>
+</html>
