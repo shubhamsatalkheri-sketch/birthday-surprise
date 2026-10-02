@@ -174,7 +174,7 @@
 </head>
 <body>
 
-    <!-- आपका अपलोडेड केसरिया गाना सीधे नाम से लिंक कर दिया है -->
+    <!-- आपका अपलोडेड केसरिया गाना -->
     <audio id="romanticTrack" loop src="Kesariya (Instrumental).mp3"></audio>
 
     <div class="card-container">
@@ -192,13 +192,14 @@
             <div class="image-box">
                 <img src="https://unsplash.com" alt="Birthday Celebration">
             </div>
-            <h1 id="ageHeading">Happy Birthday to You! 🎂✨</h1>
+            <!-- यहाँ उम्र का नंबर हटाकर सिंपल हेडिंग कर दी है -->
+            <h1>Happy Birthday to You! 🎂✨</h1>
             <p>आज तुम्हारा स्पेशल दिन है! ईश्वर करे तुम्हारी लाइफ में ढेर सारी खुशियाँ और तरक्की आए।
 
 तुम्हारे लिए मैंने एक छोटा सा सरप्राइज गिफ्ट तैयार किया है। आगे बढ़ने के लिए नीचे क्लिक करो...</p>
         </div>
 
-        <!-- PAGE 2: Transition into Deep Nostalgia -->
+        <!-- PAGE 2 -->
         <div class="page" id="page2">
             <div class="image-box">
                 <img src="https://unsplash.com" alt="Thoughts">
@@ -208,7 +209,7 @@
 
 तुम्हारी बातें, तुम्हारा वो छोटी-छोटी चीज़ों पर मुस्कुराना और हर मुश्किल वक्त में मेरे साथ खड़े रहना... सच में बहुत स्पेशल है।</p>
         </div>
-                <!-- PAGE 3: Connection -->
+        <!-- PAGE 3 -->
         <div class="page" id="page3">
             <div class="image-box">
                 <img src="https://unsplash.com" alt="Feelings">
@@ -219,7 +220,7 @@
 जब तुम साथ होते हो, तो ऐसा लगता है कि दुनिया की कोई भी परेशानी मुझे छू नहीं सकती। तुम्हारे साथ बिताया हर लम्हा सुकून देता है।</p>
         </div>
 
-        <!-- PAGE 4: Heart-Touching -->
+        <!-- PAGE 4 -->
         <div class="page" id="page4">
             <div class="image-box">
                 <img src="https://unsplash.com" alt="Sincerity">
@@ -230,7 +231,7 @@
 मैं चाहता हूँ कि हमारा यह खूबसूरत सफर कभी खत्म न हो।</p>
         </div>
 
-        <!-- PAGE 5: Ultimate Surprise Proposal Screen -->
+        <!-- PAGE 5 -->
         <div class="page" id="page5">
             <div class="image-box">
                 <img src="https://unsplash.com" alt="Proposal">
@@ -240,7 +241,7 @@
             <p>मैं वादा तो नहीं करता कि मुश्किलें कभी नहीं आएंगी, पर ये वादा ज़रूर करता हूँ कि उन मुश्किलों में तुम्हारा हाथ कभी नहीं छूटेगा। 💕</p>
         </div>
 
-        <!-- PAGE 6: Success Screen -->
+        <!-- PAGE 6 -->
         <div class="page" id="page6">
             <div style="font-size: 70px; margin-bottom: 15px;">💖🥂🎉</div>
             <h1>YAYYY! I Love You! 🥰❤️</h1>
@@ -256,29 +257,10 @@
     </div>
 
     <script>
-        // अपने बेस्ट फ्रेंड की जन्मतिथि यहाँ ऑटोमैटिक ऐज कैलकुलेटर के लिए सेट है
-        const birthDateString = "1999-03-02"; 
-        
-        function calculateCurrentAge(dob) {
-            const birthDate = new Date(dob);
-            const today = new Date();
-            let age = today.getFullYear() - birthDate.getFullYear();
-            const monthDiff = today.getMonth() - birthDate.getMonth();
-            
-            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-                age--;
-            }
-            return age;
-        }
-
-        const friendsAge = calculateCurrentAge(birthDateString);
-        document.getElementById('ageHeading').innerText = "Happy " + friendsAge + "th Birthday! 🎂✨";
-
         let currentPage = 1;
         const totalPages = 6;
         const romanticTrack = document.getElementById('romanticTrack');
 
-        // स्क्रीन पर कहीं भी क्लिक करते ही गाना बैकग्राउंड में बजने लगेगा
         document.body.addEventListener('click', function() {
             romanticTrack.play().catch(function() {});
         }, { once: true });
@@ -323,7 +305,6 @@
             }
         }
 
-        // मजेदार भागने वाला No बटन लॉजिक
         const noBtn = document.getElementById('noBtn');
         
         function flyAway() {
