@@ -12,7 +12,6 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
-    /* CSS Same as before */
     :root {
       --bg-dark: #1b162b;
       --bg-light: #fff0f5;
@@ -357,7 +356,6 @@
 
   <div class="app-screen" id="appScreen">
 
-    <!-- Fairy Lights & Cats Same as before -->
     <div class="fairy-lights">
       <span class="bulb">💖</span>
       <span class="bulb">💡</span>
@@ -489,7 +487,6 @@
         </div>
       </div>
 
-      <!-- Updated this button to trigger the song transition -->
       <button class="btn-pink" id="finalLetterBtn" style="display: none;" onclick="transitionToProposal()">Open Final Message 💌</button>
     </div>
 
@@ -518,7 +515,7 @@
 
   <script>
     const bdayAudio = document.getElementById('bdayAudio');
-    const kesariyaAudio = document.getElementById('kesariyaAudio'); // Added Kesariya Element
+    const kesariyaAudio = document.getElementById('kesariyaAudio');
     let flippedCount = 0;
 
     function goToStep(stepNum) {
@@ -599,4 +596,54 @@
           statusText.textContent = "Cake Cut! Happy Birthday! 🍰✨";
           confetti({ particleCount: 75, spread: 80, origin: { y: 0.6 } });
           setTimeout(() => { goToStep(7); }, 1400);
-       
+        }
+      }
+
+      function onEnd() { isCutting = false; }
+
+      knob.addEventListener('mousedown', onStart);
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('mouseup', onEnd);
+
+      knob.addEventListener('touchstart', onStart);
+      window.addEventListener('touchmove', onMove);
+      window.addEventListener('touchend', onEnd);
+    }
+
+    function flipCard(cardEl) {
+      if (!cardEl.classList.contains('flipped')) {
+        cardEl.classList.add('flipped');
+        flippedCount++;
+        confetti({ particleCount: 20, spread: 45, origin: { y: 0.7 } });
+        
+        if (flippedCount >= 3) {
+          setTimeout(() => {
+            const btn = document.getElementById('finalLetterBtn');
+            btn.style.display = 'inline-flex';
+            btn.scrollIntoView({ behavior: 'smooth' });
+          }, 400);
+        }
+      }
+    }
+
+    function transitionToProposal() {
+      bdayAudio.pause();
+      kesariyaAudio.play().catch(e => console.log('Audio error'));
+      goToStep(9);
+    }
+
+    function acceptProposal() {
+      confetti({ particleCount: 150, spread: 100, origin: { y: 0.5 } });
+      document.getElementById('proposalText').innerHTML = "Thank you for making me the happiest person! I promise to love you forever and always. 💖✨";
+      document.getElementById('loveYouText').innerHTML = "She said YES! 🎉💍";
+      document.getElementById('proposalBtns').style.display = 'none';
+    }
+
+    function dodgeNoPropBtn() {
+      const btn = document.getElementById('noPropBtn');
+      btn.textContent = "Please na? 🥺";
+      btn.style.transform = "scale(0.85)";
+    }
+  </script>
+</body>
+</html>
