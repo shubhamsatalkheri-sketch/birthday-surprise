@@ -1,625 +1,380 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>A Little Note For You ✨</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Caveat:wght@700&display=swap" rel="stylesheet">
-  
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-  <style>
-    :root {
-      --bg-dark: #1b162b;
-      --bg-light: #fff0f5;
-      --pink-primary: #ff4081;
-      --pink-btn: linear-gradient(135deg, #ff4081 0%, #ff6584 100%);
-      --card-white: #ffffff;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Nunito', sans-serif;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-    }
-
-    body {
-      background-color: var(--bg-dark);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow-x: hidden;
-      transition: background-color 1s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    body.lights-on {
-      background: linear-gradient(180deg, #ffeef4 0%, #ffdce8 50%, #fff5f8 100%);
-    }
-
-    .app-screen {
-      width: 100%;
-      max-width: 420px;
-      min-height: 100vh;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 24px 18px;
-      overflow: hidden;
-    }
-
-    .fairy-lights {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      display: flex;
-      justify-content: space-around;
-      padding: 8px 12px;
-      opacity: 0;
-      transform: translateY(-20px);
-      transition: all 1s ease;
-      z-index: 15;
-    }
-    .lights-on .fairy-lights {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .bulb {
-      font-size: 1.7rem;
-      animation: bulbGlow 1.2s infinite alternate ease-in-out;
-    }
-    .bulb:nth-child(2) { animation-delay: 0.2s; }
-    .bulb:nth-child(3) { animation-delay: 0.4s; }
-    .bulb:nth-child(4) { animation-delay: 0.6s; }
-    .bulb:nth-child(5) { animation-delay: 0.8s; }
-    .bulb:nth-child(6) { animation-delay: 0.3s; }
-    .bulb:nth-child(7) { animation-delay: 0.5s; }
-
-    @keyframes bulbGlow {
-      from { filter: drop-shadow(0 0 2px #fff); opacity: 0.65; }
-      to { filter: drop-shadow(0 0 12px #ff4081); opacity: 1; transform: scale(1.08); }
-    }
-
-    .cute-cat {
-      position: absolute;
-      font-size: 3.5rem;
-      z-index: 12;
-      opacity: 0;
-      transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-    .cute-cat.top-cat { top: 60px; right: 15px; transform: translateY(-40px) rotate(15deg); }
-    .cute-cat.bottom-cat { bottom: 25px; left: 15px; transform: translateY(40px) rotate(-15deg); }
-    .show-cats .cute-cat { opacity: 1; transform: translateY(0) rotate(0deg); }
-
-    .balloon {
-      position: absolute;
-      bottom: -100px;
-      font-size: 2.8rem;
-      pointer-events: none;
-      z-index: 14;
-      animation: floatBalloon 6s linear forwards;
-    }
-    @keyframes floatBalloon {
-      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(-110vh) rotate(20deg); opacity: 0; }
-    }
-
-    .card {
-      background: var(--card-white);
-      width: 100%;
-      border-radius: 26px;
-      padding: 30px 22px;
-      box-shadow: 0 16px 35px rgba(255, 105, 180, 0.15), 0 4px 10px rgba(0,0,0,0.05);
-      border: 1px solid rgba(255, 182, 193, 0.4);
-      text-align: center;
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      z-index: 20;
-      animation: popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-    .card.active { display: flex; }
-
-    @keyframes popIn {
-      0% { opacity: 0; transform: scale(0.92) translateY(15px); }
-      100% { opacity: 1; transform: scale(1) translateY(0); }
-    }
-
-    .dark-text {
-      color: #eae6f5;
-      font-size: 1.6rem;
-      font-weight: 700;
-      margin-bottom: 25px;
-    }
-    .dark-moon {
-      font-size: 4.5rem;
-      margin-bottom: 15px;
-      filter: drop-shadow(0 0 15px #ffd700);
-      animation: floatMoon 3s ease-in-out infinite;
-    }
-    @keyframes floatMoon {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-
-    .btn-pink {
-      background: var(--pink-btn);
-      color: #fff;
-      border: none;
-      outline: none;
-      width: 100%;
-      padding: 15px 24px;
-      border-radius: 50px;
-      font-size: 1.08rem;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      cursor: pointer;
-      box-shadow: 0 8px 22px rgba(255, 64, 129, 0.38);
-      transition: all 0.25s ease;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-    }
-    .btn-pink:active { transform: scale(0.96); box-shadow: 0 4px 12px rgba(255, 64, 129, 0.3); }
-
-    .btn-row {
-      display: flex;
-      gap: 12px;
-      width: 100%;
-      margin-top: 15px;
-    }
-    .btn-secondary {
-      background: #f1f3f5;
-      color: #495057;
-      border: none;
-      padding: 14px 20px;
-      border-radius: 50px;
-      font-weight: 700;
-      flex: 1;
-      cursor: pointer;
-    }
-
-    .step-dots {
-      display: flex;
-      gap: 6px;
-      margin-top: 18px;
-    }
-    .dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #ffd1dc;
-    }
-    .dot.active {
-      width: 22px;
-      border-radius: 10px;
-      background: var(--pink-primary);
-    }
-
-    .cake-drag-area {
-      width: 100%;
-      position: relative;
-      touch-action: none;
-      margin: 15px 0 10px 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .cut-track {
-      position: absolute;
-      top: 50%;
-      left: 15%;
-      width: 70%;
-      height: 6px;
-      background: rgba(255, 64, 129, 0.2);
-      border-radius: 6px;
-      z-index: 5;
-    }
-    .cut-slider {
-      position: absolute;
-      top: calc(50% - 17px);
-      left: 15%;
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: #fff;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      cursor: grab;
-      z-index: 6;
-      transition: left 0.1s ease;
-    }
-
-    .flip-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      width: 100%;
-      margin: 12px 0 18px 0;
-    }
-    .flip-box {
-      width: 100%;
-      height: 125px;
-      perspective: 1000px;
-      cursor: pointer;
-    }
-    .flip-box-inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-      transform-style: preserve-3d;
-      border-radius: 18px;
-    }
-    .flip-box.flipped .flip-box-inner {
-      transform: rotateY(180deg);
-    }
-    .flip-front, .flip-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 18px;
-      backface-visibility: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      padding: 12px 16px;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.06);
-    }
-    .flip-front {
-      background: #fff6f9;
-      border: 2px dashed #ffb3c6;
-    }
-    .flip-front span.tap-hint {
-      font-size: 0.8rem;
-      color: #ff6584;
-      font-weight: 700;
-      margin-top: 6px;
-    }
-    .flip-back {
-      background: #ffffff;
-      border: 2px solid #ff4081;
-      transform: rotateY(180deg);
-      text-align: center;
-      font-size: 0.9rem;
-      color: #495057;
-      line-height: 1.4;
-      font-weight: 600;
-    }
-
-    .letter-paper {
-      background: #fffdfa;
-      border-radius: 18px;
-      border: 1px solid #f1e0d6;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-      width: 100%;
-      padding: 26px 20px;
-      text-align: left;
-      position: relative;
-    }
-    .letter-header {
-      font-size: 0.82rem;
-      color: #adb5bd;
-      letter-spacing: 1px;
-      display: flex;
-      justify-content: space-between;
-      border-bottom: 1px dashed #e9ecef;
-      padding-bottom: 8px;
-      margin-bottom: 16px;
-      font-weight: 700;
-    }
-    .letter-title {
-      font-family: 'Fredoka', cursive;
-      font-size: 1.9rem;
-      color: var(--pink-primary);
-      margin-bottom: 12px;
-    }
-    .letter-body {
-      font-size: 0.96rem;
-      color: #495057;
-      line-height: 1.7;
-      margin-bottom: 16px;
-    }
-    .letter-signature {
-      font-family: 'Caveat', cursive;
-      font-size: 1.8rem;
-      color: #ff4081;
-      text-align: right;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>A Little Note For You ✨</title>
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&family=Caveat:wght@700&display=swap" rel="stylesheet">
+    <script src="https://jsdelivr.net"></script>
+    <style>
+        :root {
+            --bg-dark: #1b162b;
+            --bg-light: #fff0f5;
+            --pink-primary: #ff4081;
+            --pink-btn: linear-gradient(135deg, #ff4081 0%, #ff6584 100%);
+            --card-white: #ffffff;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Nunito', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+        body {
+            background-color: var(--bg-dark);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            transition: background-color 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        body.lights-on {
+            background: linear-gradient(180deg, #ffeef4 0%, #ffdce8 50%, #fff5f8 100%);
+        }
+        .app-screen {
+            width: 100%;
+            max-width: 420px;
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 18px;
+            overflow: hidden;
+        }
+        .fairy-lights {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 12px;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 1s ease;
+            z-index: 15;
+        }
+        .lights-on .fairy-lights {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .bulb {
+            font-size: 1.7rem;
+            animation: bulbGlow 1.2s infinite alternate ease-in-out;
+        }
+        .bulb:nth-child(2){animation-delay: 0.2s;}
+        .bulb:nth-child(3){animation-delay: 0.4s;}
+        .bulb:nth-child(4){animation-delay: 0.6s;}
+        .bulb:nth-child(5){animation-delay: 0.8s;}
+        .bulb:nth-child(6){animation-delay: 0.3s;}
+        .bulb:nth-child(7){animation-delay: 0.5s;}
+        
+        @keyframes bulbGlow {
+            from { filter: drop-shadow(0 0 2px #fff); opacity: 0.65; }
+            to { filter: drop-shadow(0 0 12px #ff4081); opacity: 1; transform: scale(1.08); }
+        }
+        .cute-cat {
+            position: absolute;
+            font-size: 3.5rem;
+            z-index: 12;
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .cute-cat.top-cat { top: 60px; right: 15px; transform: translateY(-40px) rotate(15deg); }
+        .cute-cat.bottom-cat { bottom: 25px; left: 15px; transform: translateY(40px) rotate(-15deg); }
+        .show-cats .cute-cat { opacity: 1; transform: translateY(0) rotate(0deg); }
+        
+        .balloon {
+            position: absolute;
+            bottom: -100px;
+            font-size: 2.8rem;
+            pointer-events: none;
+            z-index: 14;
+            animation: floatBalloon 6s linear forwards;
+        }
+        @keyframes floatBalloon {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(20deg); opacity: 0; }
+        }
+        .card {
+            background: var(--card-white);
+            width: 100%;
+            border-radius: 26px;
+            padding: 30px 22px;
+            box-shadow: 0 16px 35px rgba(255,105,180,0.15), 0 4px 10px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255,182,193,0.4);
+            text-align: center;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            z-index: 20;
+            animation: popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .card.active { display: flex; }
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.92) translateY(15px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .dark-text {
+            color: #eae6f5;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+        .dark-moon {
+            font-size: 4.5rem;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 15px #ffd700);
+            animation: floatMoon 3s ease-in-out infinite;
+        }
+        @keyframes floatMoon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .btn-pink {
+            background: var(--pink-btn);
+            color: #fff;
+            border: none;
+            outline: none;
+            width: 100%;
+            padding: 15px 24px;
+            border-radius: 50px;
+            font-size: 1.08rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            box-shadow: 0 8px 22px rgba(255, 64, 129, 0.38);
+            transition: all 0.25s ease;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-pink:active { transform: scale(0.96); box-shadow: 0 4px 12px rgba(255, 64, 129, 0.3); }
+        .btn-row { display: flex; gap: 12px; width: 100%; margin-top: 15px; }
+        .btn-secondary { background: #f1f3f5; color: #495057; border: none; padding: 14px 20px; border-radius: 50px; font-weight: 700; flex: 1; cursor: pointer; }
+        
+        .step-dots { display: flex; gap: 6px; margin-top: 18px; }
+        .dot { width: 7px; height: 7px; border-radius: 50%; background: #ffd1dc; }
+        .dot.active { width: 22px; border-radius: 10px; background: var(--pink-primary); }
+        
+        .cake-drag-area { width: 100%; position: relative; touch-action: none; margin: 15px 0 10px 0; display: flex; flex-direction: column; align-items: center; }
+        .cut-track {
+            position: absolute; top: 50%; left: 15%; width: 70%; height: 6px; background: rgba(255,64,129,0.2); border-radius: 6px; z-index: 5;
+        }
+        .cut-slider {
+            position: absolute; top: calc(50% - 17px); left: 15%; width: 34px; height: 34px; border-radius: 50%; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.25); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: grab; z-index: 6; transition: left 0.1s ease;
+        }
+        .flip-grid { display: flex; flex-direction: column; gap: 14px; width: 100%; margin: 12px 0 18px 0; }
+        .flip-box { width: 100%; height: 125px; perspective: 1000px; cursor: pointer; }
+        .flip-box-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; border-radius: 18px; }
+        .flip-box.flipped .flip-box-inner { transform: rotateY(180deg); }
+        .flip-front, .flip-back { position: absolute; width: 100%; height: 100%; border-radius: 18px; backface-visibility: hidden; display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 12px 16px; box-shadow: 0 6px 16px rgba(0,0,0,0.06); }
+        .flip-front { background: #fff6f9; border: 2px dashed #ffb3c6; }
+        .flip-front span.tap-hint { font-size: 0.8rem; color: #ff6584; font-weight: 700; margin-top: 6px; }
+        .flip-back { background: #ffffff; border: 2px solid #ff4081; transform: rotateY(180deg); text-align: center; font-size: 0.9rem; color: #495057; line-height: 1.4; font-weight: 600; }
+        
+        .letter-paper { background: #fffdfa; border-radius: 18px; border: 1px solid #f1e0d6; box-shadow: 0 15px 35px rgba(0,0,0,0.1); width: 100%; padding: 26px 20px; text-align: left; position: relative; }
+        .letter-header { font-size: 0.82rem; color: #adb5bd; letter-spacing: 1px; display: flex; justify-content: space-between; border-bottom: 1px dashed #e9ecef; padding-bottom: 8px; margin-bottom: 16px; font-weight: 700; }
+        .letter-title { font-family: 'Fredoka', cursive; font-size: 1.9rem; color: var(--pink-primary); margin-bottom: 12px; }
+        .letter-body { font-size: 0.96rem; color: #495057; line-height: 1.7; margin-bottom: 16px; }
+        .letter-signature { font-family: 'Caveat', cursive; font-size: 1.8rem; color: #ff4081; text-align: right; }
+    </style>
 </head>
 <body>
+    <!-- Kesariya गाना यहाँ सीधे कोड में सही नाम के साथ जोड़ दिया गया है -->
+    <audio id="bdayAudio" loop preload="auto">
+        <source src="Kesariya (Instrumental).mp3" type="audio/mpeg">
+    </audio>
 
-  <audio id="bdayAudio" loop preload="auto">
-    <source src="sub_clair-happy-birthday-578363.mp3" type="audio/mpeg">
-  </audio>
+    <div class="app-screen" id="appScreen">
+        <div class="fairy-lights">
+            <span class="bulb">💖</span>
+            <span class="bulb">💡</span>
+            <span class="bulb">🌸</span>
+            <span class="bulb">💡</span>
+            <span class="bulb">✨</span>
+            <span class="bulb">💡</span>
+            <span class="bulb">🎉</span>
+        </div>
+        <div class="cute-cat top-cat">🐱🎂</div>
+        <div class="cute-cat bottom-cat">🥳🐱</div>
 
-  <div class="app-screen" id="appScreen">
-
-    <div class="fairy-lights">
-      <span class="bulb">💖</span>
-      <span class="bulb">💡</span>
-      <span class="bulb">🌸</span>
-      <span class="bulb">💡</span>
-      <span class="bulb">✨</span>
-      <span class="bulb">💡</span>
-      <span class="bulb">🎉</span>
-    </div>
-
-    <div class="cute-cat top-cat">🐱🎂</div>
-    <div class="cute-cat bottom-cat">🥳🐱</div>
-
-    <!-- 1. INTRO -->
-    <div class="card active" id="step1" style="background: #fff;">
-      <div style="font-size: 0.8rem; color: #ff6584; letter-spacing: 2px; font-weight: 700; margin-bottom: 12px;">🌸 BESTIE.INTRO 🌸</div>
-      <div style="font-size: 4rem; margin-bottom: 8px;">🎂</div>
-      <div style="font-size: 0.85rem; color: #ffa4b6; font-weight: 700; letter-spacing: 1px;">A LITTLE NOTE FOR YOU</div>
-      <h2 style="font-family: 'Fredoka', cursive; font-size: 1.8rem; color: #343a40; margin: 15px 0 20px 0;">Ready to open it?</h2>
-      <div class="btn-row">
-        <button class="btn-pink" onclick="goToStep(2)">Yes! 💕</button>
-        <button class="btn-secondary" id="noBtn" onclick="runNoBtn()">No</button>
-      </div>
-    </div>
-
-    <!-- 2. DARK ROOM -->
-    <div class="card" id="step2" style="background: transparent; border: none; box-shadow: none;">
-      <div class="dark-moon">🌙 ✨</div>
-      <h2 class="dark-text">The room is dark.</h2>
-      <button class="btn-pink" onclick="turnOnLights()">Turn on the Lights 💡</button>
-      <div class="step-dots">
-        <div class="dot active"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-      </div>
-    </div>
-
-    <!-- 3. MUSIC -->
-    <div class="card" id="step3">
-      <div style="font-size: 3.5rem; margin-bottom: 10px;">🎶 🎧</div>
-      <h2 style="font-family: 'Fredoka', cursive; font-size: 1.7rem; color: #343a40; margin-bottom: 8px;">Set the Mood</h2>
-      <p style="font-size: 0.92rem; color: #6c757d; margin-bottom: 22px;">Let's turn on your favorite tunes! ✨</p>
-      <button class="btn-pink" onclick="playMusicAndNext()">Play Music 🎵</button>
-      <div class="step-dots">
-        <div class="dot"></div>
-        <div class="dot active"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-      </div>
-    </div>
-
-    <!-- 4. DECORATE -->
-    <div class="card" id="step4">
-      <div style="font-size: 3.5rem; margin-bottom: 10px;">🎀 🎈</div>
-      <h2 style="font-family: 'Fredoka', cursive; font-size: 1.7rem; color: #343a40; margin-bottom: 8px;">Decorate the Room</h2>
-      <p style="font-size: 0.92rem; color: #6c757d; margin-bottom: 22px;">Bringing some cuteness and sparkle!</p>
-      <button class="btn-pink" onclick="decorateRoom()">Decorate Now 🥳</button>
-      <div class="step-dots">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot active"></div>
-        <div class="dot"></div>
-      </div>
-    </div>
-
-    <!-- 5. BALLOONS -->
-    <div class="card" id="step5">
-      <div style="font-size: 0.8rem; color: #ff6584; letter-spacing: 2px; font-weight: 700; margin-bottom: 8px;">CELEBRATION MODE</div>
-      <h1 style="font-family: 'Fredoka', cursive; font-size: 2.1rem; color: var(--pink-primary); margin-bottom: 6px;">Happy Birthday!</h1>
-      <p style="font-size: 0.95rem; color: #6c757d; margin-bottom: 24px;">A sweet special page made with lots of love.</p>
-      <button class="btn-pink" onclick="releaseBalloons()">Release the balloons 🎈</button>
-      <div class="step-dots">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot active"></div>
-      </div>
-    </div>
-
-    <!-- 6. CAKE -->
-    <div class="card" id="step6">
-      <div style="font-size: 2.5rem; margin-bottom: 4px;">🥺 💖 ✨</div>
-      <h2 style="font-family: 'Fredoka', cursive; font-size: 1.8rem; color: var(--pink-primary);">Cake Time</h2>
-      <p style="font-size: 0.9rem; color: #868e96; margin-bottom: 15px;">Swipe across the cake to cut it 🍰</p>
-
-      <div class="cake-drag-area" id="cutArea">
-        <div style="font-size: 6rem; filter: drop-shadow(0 10px 18px rgba(0,0,0,0.12));">🎂</div>
-        <div class="cut-track"></div>
-        <div class="cut-slider" id="sliderKnob">🔪</div>
-      </div>
-
-      <p id="cutStatusText" style="font-size: 0.85rem; color: #ff4081; font-weight: 700; margin-top: 14px;">Swipe knife to cut (0%)</p>
-    </div>
-
-    <!-- 7. WISH -->
-    <div class="card" id="step7">
-      <div style="font-size: 4.5rem; margin-bottom: 10px;">🐰 🎂 🕯️</div>
-      <h2 style="font-family: 'Fredoka', cursive; font-size: 1.8rem; color: var(--pink-primary); margin-bottom: 8px;">Make a Wish</h2>
-      <p style="font-size: 0.95rem; color: #6c757d; line-height: 1.5; margin-bottom: 22px;">Close your eyes, make a sweet wish, and tap below! ✨</p>
-      <button class="btn-pink" onclick="goToStep(8)">I Made My Wish 🌟</button>
-    </div>
-
-    <!-- 8. FLIP CARDS -->
-    <div class="card" id="step8">
-      <h2 style="font-family: 'Fredoka', cursive; font-size: 1.6rem; color: var(--pink-primary); margin-bottom: 4px;">Flip these wishes 🥺💕</h2>
-      <p style="font-size: 0.85rem; color: #868e96; margin-bottom: 12px;">Each card holds a secret message for you.</p>
-
-      <div class="flip-grid">
-        <div class="flip-box" onclick="flipCard(this)">
-          <div class="flip-box-inner">
-            <div class="flip-front"><span style="font-size: 2rem;">🎂 🍰</span><span class="tap-hint">Tap me ✨</span></div>
-            <div class="flip-back">Happy Birthday to the most wonderful and supportive best friend in the world! 💖</div>
-          </div>
+        <!-- 1. INTRO -->
+        <div class="card active" id="step1" style="background: #fff;">
+            <div style="font-size: 0.8rem; color: #ff6584; letter-spacing: 2px; font-weight: 700; margin-bottom: 12px;">🌸 BESTIE INTRO 🌸</div>
+            <!-- 4. DECORATE -->
+        <div class="card" id="step4">
+            <div style="font-size: 3.5rem; margin-bottom: 10px;">🎀✨</div>
+            <h2 style="font-family: 'Fredoka', cursive; font-size: 1.7rem; color: #343a40; margin-bottom: 8px;">Decorate the Room</h2>
+            <p style="font-size: 0.92rem; color: #6c757d; margin-bottom: 22px;">Bringing some cuteness and sparkle!</p>
+            <button class="btn-pink" onclick="decorateRoom()">Decorate Now 🥳</button>
+            <div class="step-dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot active"></div>
+                <div class="dot"></div>
+            </div>
         </div>
 
-        <div class="flip-box" onclick="flipCard(this)">
-          <div class="flip-box-inner">
-            <div class="flip-front"><span style="font-size: 2rem;">🎀 🐱</span><span class="tap-hint">Tap me ✨</span></div>
-            <div class="flip-back">You are the reason for so many smiles and endless laughter. Thank you for everything! 🌸</div>
-          </div>
+        <!-- 5. BALLOONS -->
+        <div class="card" id="step5">
+            <div style="font-size: 0.8rem; color: #ff6584; letter-spacing: 2px; font-weight: 700; margin-bottom: 8px;">CELEBRATION MODE</div>
+            <h1 style="font-family: 'Fredoka', cursive; font-size: 2.1rem; color: var(--pink-primary); margin-bottom: 6px;">Happy Birthday!</h1>
+            <p style="font-size: 0.95rem; color: #6c757d; margin-bottom: 24px;">A sweet special page made with lots of love.</p>
+            <button class="btn-pink" onclick="releaseBalloons()">Release the balloons 🎈</button>
+            <div class="step-dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot active"></div>
+            </div>
         </div>
 
-        <div class="flip-box" onclick="flipCard(this)">
-          <div class="flip-box-inner">
-            <div class="flip-front"><span style="font-size: 2rem;">💌 🎁</span><span class="tap-hint">Tap me ✨</span></div>
-            <div class="flip-back">May this year bring you all the happiness, success, and dreams you truly deserve! ✨</div>
-          </div>
+        <!-- 6. CAKE TIME -->
+        <div class="card" id="step6">
+            <div style="font-size: 2.5rem; margin-bottom: 4px;">🥺🎂 ✨</div>
+            <h2 style="font-family: 'Fredoka', cursive; font-size: 1.8rem; color: var(--pink-primary);">Cake Time</h2>
+            <p style="font-size: 0.9rem; color: #868e96; margin-bottom: 15px;">Swipe across the cake to cut it 🍰</p>
+            <div class="cake-drag-area" id="cutArea">
+                <div style="font-size: 6rem; filter: drop-shadow(0 10px 18px rgba(0,0,0,0.12));">🎂</div>
+                <div class="cut-track"></div>
+                <div class="cut-slider" id="sliderKnob">🔪</div>
+            </div>
+            <p id="cutStatusText" style="font-size: 0.85rem; color: #ff4081; font-weight: 700; margin-top: 14px;">Swipe knife to cut (0%)</p>
         </div>
-      </div>
 
-      <button class="btn-pink" id="finalLetterBtn" style="display: none;" onclick="goToStep(9)">Open Final Message 💌</button>
+        <!-- 7. WISHES / FLIP LETTERS -->
+        <div class="card" id="step7">
+            <div style="font-size: 3rem; margin-bottom: 8px;">✉️❤️</div>
+            <h2 style="font-family: 'Fredoka', cursive; font-size: 1.7rem; color: #343a40;">Little Messages</h2>
+            <p style="font-size: 0.9rem; color: #6c757d; margin-bottom: 12px;">Tap on the boxes to reveal what's inside...</p>
+            
+            <div class="flip-grid">
+                <div class="flip-box" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-box-inner">
+                        <div class="flip-front"><span>Box 1 🌸</span><span class="tap-hint">Tap to open</span></div>
+                        <div class="flip-back">जब पहली बार हमारी बात हुई थी, मैंने कभी नहीं सोचा था कि तुम मेरे लिए इतने खास बन जाओगे।</div>
+                    </div>
+                </div>
+                <div class="flip-box" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-box-inner">
+                        <div class="flip-front"><span>Box 2 ✨</span><span class="tap-hint">Tap to open</span></div>
+                        <div class="flip-back">हर मुश्किल वक्त में मेरे साथ खड़े रहने के लिए थैंक यू। तुम्हारी बातें हमेशा सुकून देती हैं।</div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-pink" onclick="goToStep(8)" style="margin-top: 10px;">Read My Main Letter 💌</button>
+        </div>
+
+        <!-- 8. FINAL PROPOSAL LETTER -->
+        <div class="card" id="step8" style="background: transparent; box-shadow: none; border: none; padding: 0;">
+            <div class="letter-paper">
+                <div class="letter-header">
+                    <span>FROM: ME ❤️</span>
+                    <span>TO: MY FAVORITE 🌸</span>
+                </div>
+                <h2 class="letter-title">Will You? 💍</h2>
+                <div class="letter-body">
+                    आज तुम्हारे इस स्पेशल दिन पर, मैं अपने दिल की एक बात साफ कहना चाहता हूँ। 
+                    
+                    धीरे-धीरे न जाने कब तुम मेरी आदत और मेरी जिंदगी का सबसे खूबसूरत हिस्सा बन गए। मैं अपना हर आने वाला कल तुम्हारे साथ ही देखना चाहता हूँ।
+                    
+                    क्या तुम हमेशा के लिए मेरे हमसफर बनोगे? 💕
+                </div>
+                <div class="letter-signature">- Yours Forever</div>
+            </div>
+        </div>
     </div>
 
-    <!-- 9. FINAL LETTER -->
-    <div class="card" id="step9" style="padding: 16px;">
-      <div class="letter-paper">
-        <div class="letter-header"><span>BESTIE-LETTER.TXT</span><span>WITH LOTS OF LOVE</span></div>
-        <h3 class="letter-title">Dear Bestie,</h3>
-        <p class="letter-body">
-          Happy Birthday to someone who makes life feel softer, brighter, and a lot more fun! ✨<br><br>
-          I hope this year gives you endless joy, unbreakable peace, and all the success in the world. You are truly rare, precious, and one of a kind.
-        </p>
-        <h2 style="font-family: 'Fredoka', cursive; color: #ff4081; font-size: 1.6rem; text-align: center; margin: 15px 0;">
-          I Love You My Dear Bestie! 💖
-        </h2>
-        <div class="letter-signature">Always & Forever ✨</div>
-      </div>
+    <script>
+        const audio = document.getElementById('bdayAudio');
 
-      <button class="btn-pink" style="margin-top: 18px;" onclick="restartAll()">Restart Celebration 🔄</button>
-    </div>
-
-  </div>
-
-  <script>
-    const audio = document.getElementById('bdayAudio');
-    let flippedCount = 0;
-
-    function goToStep(stepNum) {
-      document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
-      const nextCard = document.getElementById('step' + stepNum);
-      if (nextCard) nextCard.classList.add('active');
-    }
-
-    function runNoBtn() {
-      const no = document.getElementById('noBtn');
-      no.textContent = "Are you sure? 🥺";
-      no.style.transform = "scale(0.9)";
-    }
-
-    function turnOnLights() {
-      document.body.classList.add('lights-on');
-      setTimeout(() => { goToStep(3); }, 700);
-    }
-
-    function playMusicAndNext() {
-      audio.play().catch(e => console.log('Audio error'));
-      goToStep(4);
-    }
-
-    function decorateRoom() {
-      document.getElementById('appScreen').classList.add('show-cats');
-      confetti({ particleCount: 40, spread: 60, origin: { y: 0.5 } });
-      setTimeout(() => { goToStep(5); }, 900);
-    }
-
-    function releaseBalloons() {
-      const emojis = ['🎈', '💖', '✨', '🌸', '🎀'];
-      for (let i = 0; i < 16; i++) {
-        setTimeout(() => {
-          const b = document.createElement('div');
-          b.className = 'balloon';
-          b.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-          b.style.left = Math.random() * 85 + 5 + '%';
-          b.style.animationDuration = (Math.random() * 2 + 4) + 's';
-          document.body.appendChild(b);
-          setTimeout(() => b.remove(), 6000);
-        }, i * 150);
-      }
-
-      setTimeout(() => {
-        goToStep(6);
-        initCakeCut();
-      }, 2500);
-    }
-
-    function initCakeCut() {
-      const knob = document.getElementById('sliderKnob');
-      const cutArea = document.getElementById('cutArea');
-      const statusText = document.getElementById('cutStatusText');
-      let isCutting = false;
-      let startX = 0;
-      let trackWidth = 0;
-
-      function onStart(e) {
-        isCutting = true;
-        startX = e.touches ? e.touches[0].clientX : e.clientX;
-        trackWidth = cutArea.offsetWidth * 0.65;
-      }
-
-      function onMove(e) {
-        if (!isCutting) return;
-        const currentX = e.touches ? e.touches[0].clientX : e.clientX;
-        let delta = currentX - startX;
-        if (delta < 0) delta = 0;
-        if (delta > trackWidth) delta = trackWidth;
-
-        const percent = Math.round((delta / trackWidth) * 100);
-        knob.style.left = (15 + (delta / cutArea.offsetWidth) * 100) + '%';
-        statusText.textContent = `Cut Progress: ${percent}%`;
-
-        if (percent >= 90) {
-          isCutting = false;
-          statusText.textContent = "Cake Cut! Happy Birthday! 🍰✨";
-          confetti({ particleCount: 75, spread: 80, origin: { y: 0.6 } });
-          setTimeout(() => { goToStep(7); }, 1400);
+        function goToStep(stepNum) {
+            document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
+            document.getElementById('step' + stepNum).classList.add('active');
         }
-      }
 
-      function onEnd() { isCutting = false; }
-
-      knob.addEventListener('mousedown', onStart);
-      window.addEventListener('mousemove', onMove);
-      window.addEventListener('mouseup', onEnd);
-
-      knob.addEventListener('touchstart', onStart);
-      window.addEventListener('touchmove', onMove);
-      window.addEventListener('touchend', onEnd);
-    }
-
-    
-            function flipCard(cardEl) {
-      if (!cardEl.classList.contains('flipped')) {
-        cardEl.classList.add('flipped');
-        flippedCount++;
-        confetti({ particleCount: 20, spread: 45, origin: { y: 0.7 } });
-        
-        if (flippedCount >= 3) {
-          setTimeout(() => {
-            const btn = document.getElementById('finalLetterBtn');
-            btn.style.display = 'inline-flex';
-            btn.scrollIntoView({ behavior: 'smooth' });
-          }, 400);
+        function turnOnLights() {
+            document.body.classList.add('lights-on');
+            goToStep(3);
         }
-      }
-    }
 
-    function restartAll() {
-      location.reload();
-    }
-  </script>
+        function playMusicAndNext() {
+            audio.play().catch(err => console.log("Audio lock override."));
+            goToStep(4);
+        }
+
+        function decorateRoom() {
+            document.getElementById('appScreen').classList.add('show-cats');
+            goToStep(5);
+        }
+
+        function releaseBalloons() {
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const balloon = document.createElement('div');
+                    balloon.classList.add('balloon');
+                    balloon.innerHTML = ['🎈', '❤️', '🌸', '✨'][Math.floor(Math.random() * 4)];
+                    balloon.style.left = Math.random() * 85 + 'vw';
+                    balloon.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                    document.body.appendChild(balloon);
+                    setTimeout(() => balloon.remove(), 6000);
+                }, i * 200);
+            }
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+            setTimeout(() => goToStep(6), 3000);
+        }
+
+        // Knife Slider Logic
+        const sliderKnob = document.getElementById('sliderKnob');
+        const cutArea = document.getElementById('cutArea');
+        const cutStatusText = document.getElementById('cutStatusText');
+        let isDragging = false;
+
+        function handleDrag(clientX) {
+            const rect = cutArea.getBoundingClientRect();
+            const trackWidth = rect.width * 0.7;
+            const startX = rect.left + rect.width * 0.15;
+            let currentX = clientX - startX;
+            if (currentX < 0) currentX = 0;
+            if (currentX > trackWidth) currentX = trackWidth;
+            
+            sliderKnob.style.left = (rect.width * 0.15 + currentX) + 'px';
+            let percentage = Math.round((currentX / trackWidth) * 100);
+            cutStatusText.innerText = "Swipe knife to cut (" + percentage + "%)";
+
+            if (percentage >= 95) {
+                isDragging = false;
+                cutStatusText.innerText = "Cake successfully cut! 🍰🎉";
+                confetti({ particleCount: 50, angle: 60, spread: 55, origin: { x: 0 } });
+                confetti({ particleCount: 50, angle: 120, spread: 55, origin: { x: 1 } });
+                setTimeout(() => goToStep(7), 1500);
+            }
+        }
+
+        sliderKnob.addEventListener('mousedown', () => isDragging = true);
+        window.addEventListener('mousemove', (e) => { if (isDragging) handleDrag(e.clientX); });
+        window.addEventListener('mouseup', () => isDragging = false);
+        sliderKnob.addEventListener('touchstart', () => isDragging = true);
+        window.addEventListener('touchmove', (e) => { if (isDragging) handleDrag(e.touches.clientX); });
+        window.addEventListener('touchend', () => isDragging = false);
+
+        function runNoBtn() {
+            const noBtn = document.getElementById('noBtn');
+            const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = Math.floor(Math.random() * maxX) + 'px';
+            noBtn.style.top = Math.floor(Math.random() * maxY) + 'px';
+        }
+    </script>
 </body>
 </html>
